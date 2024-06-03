@@ -1,0 +1,5 @@
+secrets.nix
+networks.nix
+.*.swp
+*~
+result
