@@ -15,6 +15,8 @@
   nix.settings = {
     experimental-features = ["nix-command" "flakes" "impure-derivations" "ca-derivations"];
     # substitute = false;
+    keep-outputs = true;
+    keep-derivations = true;
   };
   nixpkgs.config.allowUnfree = true;
 
@@ -114,6 +116,7 @@
       openFirewall = true;
       package = pkgs.minecraftServers.vanilla-1-20;
     };
+    rsyncd.enable = true;
   };
   security.rtkit.enable = true;
 
@@ -157,16 +160,22 @@
     foko = {
       uid = 1004;
       isNormalUser = true;
-      packages = import /home/foko/.config/pkgs.nix { inherit pkgs; };
+      # packages = import /home/foko/.config/pkgs.nix { inherit pkgs; };
       initialHashedPassword = "";
     };
     bunny = {
       uid = 1005;
       isNormalUser = true;
     };
+    kai = {
+      uid = 1220;
+      isNormalUser = true;
+      createHome = true;
+    };
   };
   users.groups.sand = {};
   users.groups.bunny = {};
+  users.groups.kai = {};
   # {{{ Dedicated !neofetch user for security purposes —PoolloverNathan
   users.groups.neofetch.gid = 337;
   users.users.neofetch = {
@@ -218,7 +227,7 @@
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
-  system.copySystemConfiguration = true;
+  system.copySystemConfiguration = lib.mkOverride 1 false;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
