@@ -1,18 +1,5 @@
 {
   "nodes": {
-    "absolute": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1717612922,
-        "narHash": "sha256-LGzceFshETtZSZDEdhbmCEWIQt2Wf7/+GzBRwHIdCmU=",
-        "path": "/etc/nixos",
-        "type": "path"
-      },
-      "original": {
-        "path": "/etc/nixos",
-        "type": "path"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1717196966,
@@ -31,7 +18,6 @@
     },
     "root": {
       "inputs": {
-        "absolute": "absolute",
         "nixpkgs": "nixpkgs"
       }
     }
