@@ -21,8 +21,6 @@
 	  #   };
 	  # }))
           ./configuration.nix
-          # THIS‌FUCKING‌USER‌EXISTS‌AND‌YOU‌CANNOT‌TELL‌ME‌OTHERWISE
-          { users.users.kai.uid = 1220; }
           # home-manager.nixosModules.home-manager
           # {
           #   home-manager.useGlobalPkgs = true;

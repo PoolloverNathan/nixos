@@ -168,14 +168,15 @@
       isNormalUser = true;
     };
     kai = {
-      uid = 1220;
+      uid = 1022;
       isNormalUser = true;
-      createHome = true;
+      group = "users";
+      extraGroups = ["wheel"];
+      hashedPassword = "$y$j9T$rDEo4MR.C4ZzaBPXkpWEb.$FpdzrLaf4E8R.IhyXsdjSYQ6WObpHnQKO50a0mBpKb6";
     };
   };
   users.groups.sand = {};
   users.groups.bunny = {};
-  users.groups.kai = {};
   # {{{ Dedicated !neofetch user for security purposes —PoolloverNathan
   users.groups.neofetch.gid = 337;
   users.users.neofetch = {
