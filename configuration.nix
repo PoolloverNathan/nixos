@@ -18,6 +18,7 @@
     keep-outputs = true;
     keep-derivations = true;
   };
+  nix.trustedUsers = ["root" "@wheel"];
   nixpkgs.config.allowUnfree = true;
 
   hardware.bluetooth = {
