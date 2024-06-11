@@ -143,10 +143,15 @@
   # };
   users.mutableUsers = false;
   users.users = {
+    root = {
+      uid = 0;
+      extraGroups = ["wheel"];
+    };
     nathan = {
       uid = 1000;
       isNormalUser = true;
       extraGroups = ["wheel"];
+      shell = pkgs.bashInteractive + /bin/bash;
       packages = pkgs.lib.attrValues (import /home/nathan/.config/pkgs.nix { inherit pkgs; });
     };
     sand = {
@@ -201,6 +206,7 @@
     pkgs.wget
     pkgs.git
     pkgs.screen
+    pkgs.bashInteractive
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

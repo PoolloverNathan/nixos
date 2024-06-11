@@ -3,13 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    goofybot.url = path:/home/nathan/stuff/GoofyBot;
     # absolute.url = path:/etc/nixos;
     # absolute.flake = false;
     # home-manager.url = "github:nix-community/home-manager";
     # home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ nixpkgs, ... }: rec {
+  outputs = inputs@{ nixpkgs, goofybot, ... }: rec {
     nixosConfigurations = {
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
@@ -30,6 +31,7 @@
           #   # Optionally, use home-manager.extraSpecialArgs to pass
           #   # arguments to home.nix
           # }
+          goofybot.nixosModules.default
         ];
       };
     };
