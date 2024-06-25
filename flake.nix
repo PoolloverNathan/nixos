@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    fokquote.url = github:fokohetman/fokquote;
+    fokquote.url = github:fokohetman/fok-quote;
     # absolute.url = path:/etc/nixos;
     # absolute.flake = false;
     # home-manager.url = "github:nix-community/home-manager";
