@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     fokquote.url = github:fokohetman/fok-quote;
+    sadan4.url = github:sadan4/dotfiles;
     # absolute.url = path:/etc/nixos;
     # absolute.flake = false;
     # home-manager.url = "github:nix-community/home-manager";
