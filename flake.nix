@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    goofybot.url = path:/home/nathan/stuff/GoofyBot;
     fokquote.url = git+ssh://foko@foko-pc/home/foko/Flakes/FokQuote;
     # absolute.url = path:/etc/nixos;
     # absolute.flake = false;
@@ -11,7 +10,7 @@
     # home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, goofybot, fokquote }: rec {
+  outputs = inputs@{ self, nixpkgs, fokquote }: rec {
     nixosConfigurations = {
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
@@ -32,7 +31,6 @@
           #   # Optionally, use home-manager.extraSpecialArgs to pass
           #   # arguments to home.nix
           # }
-          goofybot.nixosModules.default
         ];
       };
     };

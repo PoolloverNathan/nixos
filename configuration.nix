@@ -198,7 +198,7 @@ inputs:
       isNormalUser = true;
       extraGroups = ["wheel"];
       shell = pkgs.bashInteractive + /bin/bash;
-      packages = pkgs.lib.attrValues (import /home/nathan/.config/pkgs.nix (inputs // { inherit pkgs; }));
+      packages = pkgs.lib.attrValues (import ./user/nathan.nix (inputs // { inherit pkgs; }));
     };
     sand = {
       uid = 1001;
