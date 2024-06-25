@@ -11,7 +11,7 @@
     # home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, fokquote }: rec {
+  outputs = inputs@{ self, nixpkgs, fokquote, ... }: rec {
     nixosConfigurations = {
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
