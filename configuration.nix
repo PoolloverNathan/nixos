@@ -100,7 +100,7 @@ inputs:
   };
 
   # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "America/New_York";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -191,13 +191,6 @@ inputs:
     root = {
       uid = 0;
       extraGroups = ["wheel"];
-    };
-    nathan = {
-      uid = 1471;
-      isNormalUser = true;
-      extraGroups = ["wheel"];
-      shell = pkgs.bashInteractive + /bin/bash;
-      packages = pkgs.lib.attrValues (import ./user/nathan.nix (inputs // { inherit pkgs; }));
     };
     sand = {
       uid = 1001;

@@ -13,6 +13,18 @@
 
   outputs = inputs@{ self, nixpkgs, fokquote, ... }: rec {
     # formatter = builtins.mapAttrs (system: pkgs: pkgs.nixfmt-rfc-style)
+    nixosModules = {
+      nathan = { pkgs, ... }: {
+        users.users.nathan = {
+          uid = 1471;
+          isNormalUser = true;
+          group = "users";
+          extraGroups = ["wheel"];
+          shell = pkgs.powershell + /bin/pwsh;
+          packages = pkgs.lib.attrValues (import ./user/nathan.nix (inputs // { inherit pkgs; }));
+        };
+      };
+    };
     nixosConfigurations = {
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
@@ -24,6 +36,7 @@
 	  #   };
 	  # }))
           (import ./configuration.nix inputs)
+          nixosModules.nathan
           # home-manager.nixosModules.home-manager
           # {
           #   home-manager.useGlobalPkgs = true;
@@ -33,7 +46,9 @@
           #   # Optionally, use home-manager.extraSpecialArgs to pass
           #   # arguments to home.nix
           # }
-          (mkTailnet {})
+          (mkTailnet {
+            ssh = false;
+          })
         ];
       };
     };
