@@ -12,6 +12,7 @@
   };
 
   outputs = inputs@{ self, nixpkgs, fokquote, ... }: rec {
+    # formatter = builtins.mapAttrs (system: pkgs: pkgs.nixfmt-rfc-style)
     nixosConfigurations = {
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
@@ -32,8 +33,49 @@
           #   # Optionally, use home-manager.extraSpecialArgs to pass
           #   # arguments to home.nix
           # }
+          (mkTailnet {})
         ];
       };
+    };
+    mkTailnet = {
+      hostname   ? null,
+      ssh        ? true,
+      extraFlags ? [],
+      container  ? null,
+      exitNode   ? true,
+      tunnelPort ? 41641,
+    }: let
+      config = {
+        services.tailscale = {
+          enable = true;
+          port = tunnelPort;
+          openFirewall = true;
+          extraUpFlags =
+            (
+              if ssh then
+                ["--ssh"]
+              else
+                []
+            ) ++ (
+              if exitNode == true then
+                ["--advertise-exit-node"]
+              else if exitNode == null || exitNode == false then
+                []
+              else
+                ["--exit-node=${exitNode}"]
+            ) ++ (
+              if hostname != null then
+                ["--hostname=${hostname}"]
+              else
+                []
+            ) ++ extraFlags;
+          authKeyFile = builtins.toFile "tailscale-auth-key" "tskey-auth-kUMZpfCYXF11CNTRL-D2Rz24arzyQEirrNuLgT1RiCDH4Lw8fz";
+        };
+      };
+    in if container == null then
+      config
+    else {
+      containers.${container} = config;
     };
     packages = builtins.foldl' nixpkgs.lib.recursiveUpdate {} (builtins.map (att: {
       ${nixosConfigurations.${att}.pkgs.system}.${att} = nixosConfigurations.${att}.config.system.build;

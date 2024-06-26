@@ -137,7 +137,6 @@ inputs:
         enable = true;
       };
     };
-    tailscale.enable = true;
     openssh.enable = true;
     openssh.settings = {
       X11Forwarding = true;
