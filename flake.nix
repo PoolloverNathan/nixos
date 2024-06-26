@@ -5,23 +5,27 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     fokquote.url = github:fokohetman/fok-quote;
     sadan4.url = github:sadan4/dotfiles;
-    # absolute.url = path:/etc/nixos;
-    # absolute.flake = false;
-    # home-manager.url = "github:nix-community/home-manager";
-    # home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = github:nix-community/home-manager;
   };
 
-  outputs = inputs@{ self, nixpkgs, fokquote, ... }: rec {
+  outputs = inputs@{ self, nixpkgs, fokquote, home-manager, ... }: rec {
     # formatter = builtins.mapAttrs (system: pkgs: pkgs.nixfmt-rfc-style)
     nixosModules = {
       nathan = { pkgs, ... }: {
+        imports = [
+          home-manager.nixosModules.home-manager
+        ];
         users.users.nathan = {
           uid = 1471;
           isNormalUser = true;
           group = "users";
           extraGroups = ["wheel"];
           shell = pkgs.powershell + /bin/pwsh;
-          packages = pkgs.lib.attrValues (import ./user/nathan.nix (inputs // { inherit pkgs; }));
+        };
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          users.nathan = import ./user/nathan.nix inputs;
         };
       };
     };
@@ -29,23 +33,8 @@
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         modules = [
-	  # (arg: import (absolute + /configuration.nix) (arg // {
-	  #   inherit absolute;
-	  #   pkgs = import nixpkgs {
-	  #     inherit system;
-	  #   };
-	  # }))
           (import ./configuration.nix inputs)
           nixosModules.nathan
-          # home-manager.nixosModules.home-manager
-          # {
-          #   home-manager.useGlobalPkgs = true;
-          #   home-manager.useUserPackages = true;
-          #   home-manager.users.jdoe = import ./home.nix;
-
-          #   # Optionally, use home-manager.extraSpecialArgs to pass
-          #   # arguments to home.nix
-          # }
           (mkTailnet {
             ssh = false;
           })
