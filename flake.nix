@@ -2,11 +2,13 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    catppuccin.url = github:catppuccin/nix;
     fokquote.url = github:fokohetman/fok-quote;
-    sadan4.url = github:sadan4/dotfiles;
-    nixvim.url = github:nix-community/nixvim;
     home-manager.url = github:nix-community/home-manager;
+    nethack.url = git+ssh://nathanlaptopv/home/nathan/stuff/nethack;
+    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
+    nixvim.url = github:nix-community/nixvim;
+    sadan4.url = github:sadan4/dotfiles;
   };
 
   outputs = inputs@{ self, nixpkgs, fokquote, home-manager, ... }: rec {

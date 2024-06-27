@@ -1,14 +1,23 @@
 # vim: ts=2 sts=2 sw=2 et
 {
-  sadan4,
+  catppuccin,
   fokquote,
+  nethack,
   nixvim,
   pkgs,
+  sadan4,
   ...
 }: {
-  imports = [nixvim.homeManagerModules.nixvim];
+  imports = [
+    nixvim.homeManagerModules.nixvim
+    catppuccin.homeManagerModules.catppuccin
+  ];
   system.hashedPassword = "$y$j9T$lfDMkzctZ7jVUA.rK6U/3/$stLjTnRqME75oum.040Ya7tKAPsnIJ.gAZYQk57vNp2";
   system.userDescription = "PoolloverNathan";
+  catppuccin = {
+    enable = true;
+    flavor = "frappe";
+  };
   home.stateVersion = "24.11";
   home.packages = builtins.attrValues rec {
     inherit (pkgs)
@@ -16,6 +25,7 @@
     clinfo
     ed
     emacs
+    fastfetch
     firefox
     fprintd
     gh
@@ -28,9 +38,11 @@
     prismlauncher
     python312Full
     thefuck
+    tmux
     vscodium
     xclip
     xsel;
+    nethack_ = nethack.packages.${pkgs.system}.default;
     # inherit (pkgs.jetbrains)
     # idea-community;
     discord = pkgs.discord.override {

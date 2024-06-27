@@ -262,6 +262,13 @@ inputs:
     enable = true;
     libraries = [pkgs.glibc];
   };
+  programs.git = {
+    enable = true;
+    lfs.enable = true;
+    config = {
+      safe.directory = "*";
+    };
+  };
 
 
   # {{{ nrb = sudo nixos-rebuild
