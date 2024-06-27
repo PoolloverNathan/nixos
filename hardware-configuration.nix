@@ -2,7 +2,12 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
-
+let
+  bindMount = path: {
+    device = builtins.toString path;
+    options = ["bind"];
+  };
+in
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
@@ -13,15 +18,27 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/4473c8f2-f123-43bb-9a93-6a457f387f3f";
-      fsType = "ext4";
-    };
+  # fileSystems."/" =
+  #   { device = "/dev/disk/by-uuid/4473c8f2-f123-43bb-9a93-6a457f387f3f";
+  #     fsType = "ext4";
+  #   };
+  fileSystems."/" = {
+    fsType = "tmpfs";
+  };
 
   fileSystems."/nix" =
     { device = "/dev/disk/by-uuid/713dd0bc-4f20-4783-a5df-31e725136faa";
       fsType = "ext4";
     };
+  fileSystems."/nix/persist" =
+    { device = "/dev/disk/by-uuid/4473c8f2-f123-43bb-9a93-6a457f387f3f";
+      fsType = "ext4";
+      neededForBoot = true;
+    };
+  fileSystems."/home/nathan" = bindMount /nix/persist/home/nathan;
+  fileSystems."/root" = bindMount /nix/persist/root;
+  fileSystems."/etc/nixos" = bindMount /nix/persist/etc/nixos;
+  fileSystems."/var/lib" = bindMount /nix/persist/var/lib;
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/0EE0-12DA";
