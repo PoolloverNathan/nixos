@@ -1,10 +1,12 @@
 # vim: ts=2 sts=2 sw=2 et
 {
-  sadan4 ? builtins.getFlake (github.com:sadan4/dotfiles),
-  fokquote ? builtins.getFlake (github:fokohetman/fok-quote),
-  pkgs ? import <nixpkgs> {},
+  sadan4,
+  fokquote,
+  nixvim,
+  pkgs,
   ...
 }: {
+  imports = [nixvim.homeManagerModules.nixvim];
   system.hashedPassword = "$y$j9T$lfDMkzctZ7jVUA.rK6U/3/$stLjTnRqME75oum.040Ya7tKAPsnIJ.gAZYQk57vNp2";
   system.userDescription = "PoolloverNathan";
   home.stateVersion = "24.11";
@@ -23,7 +25,6 @@
     jdk17
     # kde-connect
     kitty
-    neovim
     prismlauncher
     python312Full
     thefuck
@@ -42,5 +43,10 @@
       # patchFlags = ["-p0"];
     };
     fok-quote = fokquote.packages.${pkgs.system}.default;
+  };
+  programs.nixvim = {
+    enable = true;
+    colorschemes.catppuccin.enable = true;
+    plugins.lightline.enable = true;
   };
 }

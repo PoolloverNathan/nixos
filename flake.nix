@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     fokquote.url = github:fokohetman/fok-quote;
     sadan4.url = github:sadan4/dotfiles;
+    nixvim.url = github:nix-community/nixvim;
     home-manager.url = github:nix-community/home-manager;
   };
 
@@ -96,7 +97,7 @@
           };
           imports = [
             extraUserConfig
-            (if userConfigFile != null then import userConfigFile args else {})
+            (if userConfigFile != null then import userConfigFile (args // extraConfigArgs) else {})
           ];
           config.assertions = [
             {
