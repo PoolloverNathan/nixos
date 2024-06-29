@@ -2,7 +2,7 @@
 {
   catppuccin,
   fokquote,
-  nethack,
+  # nethack,
   nixvim,
   pkgs,
   sadan4,
