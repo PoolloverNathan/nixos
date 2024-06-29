@@ -14,18 +14,19 @@
   outputs = inputs@{ self, nixpkgs, fokquote, home-manager, ... }: rec {
     # formatter = builtins.mapAttrs (system: pkgs: pkgs.nixfmt-rfc-style)
     nixosModules = {
-      nathan = args@{ pkgs, ... }: {
+      nathan.__functor = self: args@{ pkgs, ... }: {
         imports = [
           home-manager.nixosModules.home-manager
-          (defineUser {
-            uid = 1471;
-            name = "nathan";
-            canSudo = true;
-            userConfigFile = user/nathan.nix;
-            extraConfigArgs = inputs;
-          } args)
+          self.withoutHome
         ];
       };
+      nathan.withoutHome = defineUser {
+        uid = 1471;
+        name = "nathan";
+        canSudo = true;
+        userConfigFile = user/nathan.nix;
+        extraConfigArgs = inputs;
+      } args;
     };
     nixosConfigurations = {
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
@@ -47,6 +48,7 @@
       userConfigFile ? null,
       extraHomeConfig ? {},
       extraConfigArgs ? {},
+      includeHome ? true,
     }: args@{
       pkgs,
       lib,
@@ -66,48 +68,50 @@
           inherit (systemConfig) shell hashedPassword;
           description = systemConfig.userDescription;
         } // extraUserConfig;
-        home-manager.users.${name} = {
-          options.system = {
-            hashedPassword = lib.mkOption {
-              description = ''
-                The hash of your password. To generate a password hash, run `mkpasswd`. In most simple cases, you can also use `nixos passwd` to change your password.
-                '';
-              type = lib.types.nullOr (lib.types.passwdEntry lib.types.singleLineStr);
-              default = null;
+        home-manager = lib.mkIf includeHome {
+	  users.${name} = {
+            options.system = {
+              hashedPassword = lib.mkOption {
+                description = ''
+                  The hash of your password. To generate a password hash, run `mkpasswd`. In most simple cases, you can also use `nixos passwd` to change your password.
+                  '';
+                type = lib.types.nullOr (lib.types.passwdEntry lib.types.singleLineStr);
+                default = null;
+              };
+              shell = lib.mkOption {
+                description = ''
+                  Your default shell, to be used when logging in. Can be either a derivation (for `nix run`-like behavior) or a path (to run directly). If you pass a derivation that refers to an executable file directly, as opposed to the more common derivation with a `bin` directory, explicitly select `.outPath`.
+                  '';
+                type = lib.types.pathInStore;
+                default = pkgs.bashInteractive + /bin/bash;
+              };
+              userDescription = lib.mkOption {
+                description = ''
+                  The description to give your user. This can be e.g. a longer or more common username.
+                  '';
+                type = lib.types.passwdEntry lib.types.singleLineStr;
+                default = "";
+              };
+              sshKeys = lib.mkOption {
+                description = ''
+                  Public keys to allow SSH authorization for. If some are set, it will be legal to leave the password unspecified.
+                  '';
+                type = with lib.types; listOf singleLineStr;
+                default = [];
+              };
             };
-            shell = lib.mkOption {
-              description = ''
-                Your default shell, to be used when logging in. Can be either a derivation (for `nix run`-like behavior) or a path (to run directly). If you pass a derivation that refers to an executable file directly, as opposed to the more common derivation with a `bin` directory, explicitly select `.outPath`.
-                '';
-              type = lib.types.pathInStore;
-              default = pkgs.bashInteractive + /bin/bash;
-            };
-            userDescription = lib.mkOption {
-              description = ''
-                The description to give your user. This can be e.g. a longer or more common username.
-                '';
-              type = lib.types.passwdEntry lib.types.singleLineStr;
-              default = "";
-            };
-            sshKeys = lib.mkOption {
-              description = ''
-                Public keys to allow SSH authorization for. If some are set, it will be legal to leave the password unspecified.
-                '';
-              type = with lib.types; listOf singleLineStr;
-              default = [];
-            };
+            imports = [
+              extraUserConfig
+              (if userConfigFile != null then import userConfigFile (args // extraConfigArgs) else {})
+            ];
+            config.assertions = [
+              {
+                assertion = systemConfig.sshKeys != [] || systemConfig.hashedPassword != null;
+                message = "User ${name} [${uid}] has no way to log in";
+              }
+            ];
           };
-          imports = [
-            extraUserConfig
-            (if userConfigFile != null then import userConfigFile (args // extraConfigArgs) else {})
-          ];
-          config.assertions = [
-            {
-              assertion = systemConfig.sshKeys != [] || systemConfig.hashedPassword != null;
-              message = "User ${name} [${uid}] has no way to log in";
-            }
-          ];
-        };
+	};
       };
     };
     mkTailnet = {
