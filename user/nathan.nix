@@ -42,7 +42,7 @@
     vscodium
     xclip
     xsel;
-    nethack_ = nethack.packages.${pkgs.system}.default;
+    # nethack_ = nethack.packages.${pkgs.system}.default;
     # inherit (pkgs.jetbrains)
     # idea-community;
     discord = pkgs.discord.override {

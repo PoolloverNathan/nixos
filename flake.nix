@@ -5,7 +5,7 @@
     catppuccin.url = github:catppuccin/nix;
     fokquote.url = github:fokohetman/fok-quote;
     home-manager.url = github:nix-community/home-manager;
-    nethack.url = git+ssh://nathanlaptopv/home/nathan/stuff/nethack;
+    # nethack.url = git+ssh://nathanlaptopv/home/nathan/stuff/nethack;
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
     nixvim.url = github:nix-community/nixvim;
     sadan4.url = github:sadan4/dotfiles;
@@ -17,7 +17,7 @@
       nathan.__functor = self: args@{ pkgs, ... }: {
         imports = [
           home-manager.nixosModules.home-manager
-          self.withoutHome
+          (self.withoutHome args)
         ];
       };
       nathan.withoutHome = defineUser {
@@ -26,7 +26,7 @@
         canSudo = true;
         userConfigFile = user/nathan.nix;
         extraConfigArgs = inputs;
-      } args;
+      };
     };
     nixosConfigurations = {
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
