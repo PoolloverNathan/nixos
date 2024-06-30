@@ -23,9 +23,9 @@
         extraConfigArgs = inputs;
 	imports = [
 	  ({ lib, config, ... }: {
-	    services.openssh.settings.PermitRootLogin = lib.mkIf config.services.openssh.enable (lib.mkOverride (-50) "prohibit-password")
-	  })
-	]
+	    services.openssh.settings.PermitRootLogin = lib.mkIf config.services.openssh.enable (lib.mkOverride (-50) "prohibit-password");
+	  });
+	];
       };
     };
     nixosConfigurations = {
