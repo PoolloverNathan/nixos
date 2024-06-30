@@ -95,8 +95,12 @@ inputs:
     };
     # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
     nameservers = ["2a07:a8c0::ef:ea54" "2a07:a8c1::ef:ea54" "8.8.8.8"];
-    # firewall.allowedTCPPorts = [2423 2352 31337 6697];
-    firewall.enable = false;
+    nftables.enable = true;
+    firewall = {
+      enable = false;
+      allowedTCPPorts = [2423 2352 31337 6697];
+      rejectPackets = true;
+    };
   };
 
   # Set your time zone.
@@ -218,6 +222,15 @@ inputs:
       group = "users";
       extraGroups = ["wheel"];
       hashedPassword = "$y$j9T$rDEo4MR.C4ZzaBPXkpWEb.$FpdzrLaf4E8R.IhyXsdjSYQ6WObpHnQKO50a0mBpKb6";
+    };
+    nemmy = {
+      uid = 1253;
+      isNormalUser = true;
+      group = "users";
+      hashedPassword = "$y$j9T$laBYp0OM6ZMEg.FeGV4J20$MOSlQJA.XGo4SXsn7zUi5o3Y6SUp5tBhASDoTFMJ6j4";
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKMh9MzUXUv/qhUUbUE8KMykreeGbwSDQk/YHPcTi0Wc panda@pandaptable.moe"
+      ];
     };
   };
   users.groups.sand = {};

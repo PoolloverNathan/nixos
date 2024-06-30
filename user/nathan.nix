@@ -56,9 +56,20 @@
     };
     fok-quote = fokquote.packages.${pkgs.system}.default;
   };
-  programs.nixvim = {
-    enable = true;
-    colorschemes.catppuccin.enable = true;
-    plugins.lightline.enable = true;
+  programs = {
+    nixvim = {
+      enable = true;
+      colorschemes.catppuccin.enable = true;
+      plugins.lightline.enable = true;
+    };
+    ssh = {
+      enable = true;
+      matchBlocks = {
+        bunny = {
+          host = "nixos.kamori-ghoul.ts.net";
+          port = 2222;
+        };
+      };
+    };
   };
 }

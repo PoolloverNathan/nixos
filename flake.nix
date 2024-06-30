@@ -9,23 +9,23 @@
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
     nixvim.url = github:nix-community/nixvim;
     sadan4.url = github:sadan4/dotfiles;
+    bunny.url = github:TheBunnyMan123/nixos-config;
   };
 
   outputs = inputs@{ self, nixpkgs, fokquote, home-manager, ... }: rec {
     # formatter = builtins.mapAttrs (system: pkgs: pkgs.nixfmt-rfc-style)
     nixosModules = {
-      nathan.__functor = self: args@{ pkgs, ... }: {
-        imports = [
-          home-manager.nixosModules.home-manager
-          (self.withoutHome args)
-        ];
-      };
-      nathan.withoutHome = defineUser {
+      nathan = defineUser {
         uid = 1471;
         name = "nathan";
         canSudo = true;
         userConfigFile = user/nathan.nix;
         extraConfigArgs = inputs;
+	imports = [
+	  ({ lib, config, ... }: {
+	    services.openssh.settings.PermitRootLogin = lib.mkIf config.services.openssh.enable (lib.mkOverride (-50) "prohibit-password")
+	  })
+	]
       };
     };
     nixosConfigurations = {
@@ -33,7 +33,9 @@
         system = "x86_64-linux";
         modules = [
           (import ./configuration.nix inputs)
+          home-manager.nixosModules.home-manager
           nixosModules.nathan
+	  inputs.bunny.nixosModules.bunny-sshworthy
           (mkTailnet {
             ssh = false;
           })
@@ -48,7 +50,7 @@
       userConfigFile ? null,
       extraHomeConfig ? {},
       extraConfigArgs ? {},
-      includeHome ? true,
+      imports ? [],
     }: args@{
       pkgs,
       lib,
@@ -58,60 +60,59 @@
     }:
     assert lib.assertMsg (extraConfigArgs != {} -> userConfigFile != null) "Cannot pass arguments to an unspecified config file";
     {
+      inherit imports;
       config = let
         systemConfig = config.home-manager.users.${name}.system;
       in {
         users.users.${name} = {
           isNormalUser = !extraUserConfig.isSystemUser or false;
           inherit uid;
-          extraGroups = if canSudo then ["wheel"] else [];
+          extraGroups = if canSudo then lib.mkOverride (-100) ["wheel"] else [];
           inherit (systemConfig) shell hashedPassword;
           description = systemConfig.userDescription;
         } // extraUserConfig;
-        home-manager = lib.mkIf includeHome {
-	  users.${name} = {
-            options.system = {
-              hashedPassword = lib.mkOption {
-                description = ''
-                  The hash of your password. To generate a password hash, run `mkpasswd`. In most simple cases, you can also use `nixos passwd` to change your password.
-                  '';
-                type = lib.types.nullOr (lib.types.passwdEntry lib.types.singleLineStr);
-                default = null;
-              };
-              shell = lib.mkOption {
-                description = ''
-                  Your default shell, to be used when logging in. Can be either a derivation (for `nix run`-like behavior) or a path (to run directly). If you pass a derivation that refers to an executable file directly, as opposed to the more common derivation with a `bin` directory, explicitly select `.outPath`.
-                  '';
-                type = lib.types.pathInStore;
-                default = pkgs.bashInteractive + /bin/bash;
-              };
-              userDescription = lib.mkOption {
-                description = ''
-                  The description to give your user. This can be e.g. a longer or more common username.
-                  '';
-                type = lib.types.passwdEntry lib.types.singleLineStr;
-                default = "";
-              };
-              sshKeys = lib.mkOption {
-                description = ''
-                  Public keys to allow SSH authorization for. If some are set, it will be legal to leave the password unspecified.
-                  '';
-                type = with lib.types; listOf singleLineStr;
-                default = [];
-              };
+        home-manager.users.${name} = {
+          options.system = {
+            hashedPassword = lib.mkOption {
+              description = ''
+                The hash of your password. To generate a password hash, run `mkpasswd`. In most simple cases, you can also use `nixos passwd` to change your password.
+                '';
+              type = lib.types.nullOr (lib.types.passwdEntry lib.types.singleLineStr);
+              default = null;
             };
-            imports = [
-              extraUserConfig
-              (if userConfigFile != null then import userConfigFile (args // extraConfigArgs) else {})
-            ];
-            config.assertions = [
-              {
-                assertion = systemConfig.sshKeys != [] || systemConfig.hashedPassword != null;
-                message = "User ${name} [${uid}] has no way to log in";
-              }
-            ];
+            shell = lib.mkOption {
+              description = ''
+                Your default shell, to be used when logging in. Can be either a derivation (for `nix run`-like behavior) or a path (to run directly). If you pass a derivation that refers to an executable file directly, as opposed to the more common derivation with a `bin` directory, explicitly select `.outPath`.
+                '';
+              type = lib.types.pathInStore;
+              default = pkgs.bashInteractive + /bin/bash;
+            };
+            userDescription = lib.mkOption {
+              description = ''
+                The description to give your user. This can be e.g. a longer or more common username.
+                '';
+              type = lib.types.passwdEntry lib.types.singleLineStr;
+              default = "";
+            };
+            sshKeys = lib.mkOption {
+              description = ''
+                Public keys to allow SSH authorization for. If some are set, it will be legal to leave the password unspecified.
+                '';
+              type = with lib.types; listOf singleLineStr;
+              default = [];
+            };
           };
-	};
+          imports = [
+            extraUserConfig
+            (if userConfigFile != null then import userConfigFile (args // extraConfigArgs) else {})
+          ];
+          config.assertions = [
+            {
+              assertion = systemConfig.sshKeys != [] || systemConfig.hashedPassword != null;
+              message = "User ${name} [${uid}] has no way to log in";
+            }
+          ];
+        };
       };
     };
     mkTailnet = {
