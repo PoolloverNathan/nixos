@@ -19,6 +19,7 @@
   catppuccin = {
     enable = true;
     flavor = "frappe";
+    accent = "sky";
   };
   home.stateVersion = "24.11";
   home.packages = builtins.attrValues rec {
@@ -50,11 +51,35 @@
     };
     fok-quote = fokquote.packages.${pkgs.system}.default;
   };
+  # let powerline access catppuccin
+  home.file.".config/powerline/colors.json".text = builtins.toJSON {
+    colors = lib.mapAttrs (_: { hex, ... }: [27 (builtins.substring 1 6 hex)]) ctpPalette;
+    gradients = {};
+  };
+  home.file.".config/powerline/colorschemes/catppuccin.json".text = builtins.toJSON {
+    ext.bash.colorscheme = "catppuccin";
+    groups = {
+      cwd = {
+        fg = "text";
+        bg = "surface0";
+      };
+      "cwd:divider" = {
+        fg = "subtext";
+        bg = "surface0";
+      };
+      "cwd:current_folder" = {
+        fg = "text";
+        bg = "surface0";
+        attrs = ["bold"];
+      };
+    };
+  };
+  # home.file.".config/powerline/themes/"
   programs = {
     bash = {
       enable = true;
-      historyControl = ["erasedups" "ignorespace"];
-      historySize = 0;
+      historyControl = ["ignoredups" "ignorespace"];
+      historySize = -1;
     };
     emacs.enable = true;
     fastfetch.enable = true;
