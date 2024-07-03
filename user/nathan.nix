@@ -2,6 +2,8 @@
 {
   catppuccin,
   fokquote,
+  home-manager,
+  lib,
   # nethack,
   nixvim,
   pkgs,
@@ -24,21 +26,13 @@
     blockbench
     clinfo
     ed
-    emacs
-    fastfetch
-    firefox
     fprintd
-    gh
     ghc
     glxinfo
-    htop
     jdk17
     # kde-connect
-    kitty
     prismlauncher
     python312Full
-    thefuck
-    tmux
     vscodium
     xclip
     xsel;
@@ -57,6 +51,17 @@
     fok-quote = fokquote.packages.${pkgs.system}.default;
   };
   programs = {
+    bash = {
+      enable = true;
+      historyControl = ["erasedups" "ignorespace"];
+      historySize = 0;
+    };
+    emacs.enable = true;
+    fastfetch.enable = true;
+    firefox.enable = true;
+    gh.enable = true;
+    htop.enable = true;
+    kitty.enable = true;
     nixvim = {
       enable = true;
       colorschemes.catppuccin.enable = true;
@@ -71,5 +76,10 @@
         };
       };
     };
+    thefuck = {
+      enable = true;
+      enableBashIntegration = true;
+    };
+    tmux.enable = true;
   };
 }
