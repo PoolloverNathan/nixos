@@ -160,12 +160,17 @@ inputs:
       package = pkgs.minecraftServers.vanilla-1-20;
     };
     rsyncd.enable = true;
-    ircdHybrid = {
-      enable = true;
-      serverName = "Poolrc";
-      description = "IRC server for PoolloverNathan's tailnet.";
-      extraIPs = ["0.0.0.0"];
-    };
+    # ircdHybrid = {
+    #   enable = true;
+    #   serverName = "Poolrc";
+    #   description = "IRC server for PoolloverNathan's tailnet.";
+    #   extraIPs = ["127.0.0.1"];
+    # };
+    ngircd.enable = true;
+    ngircd.config = ''
+      [OPTIONS]
+      PAM = false
+    '';
     jellyfin.enable = true;
     jellyfin.openFirewall = true;
   };

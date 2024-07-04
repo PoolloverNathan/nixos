@@ -21,11 +21,13 @@
         canSudo = true;
         userConfigFile = user/nathan.nix;
         extraConfigArgs = inputs;
-	imports = [
-	  ({ lib, config, ... }: {
-	    services.openssh.settings.PermitRootLogin = lib.mkIf config.services.openssh.enable (lib.mkOverride (-50) "prohibit-password");
-	  })
-	];
+      };
+      nathan-nosudo = defineUser {
+        uid = 1471;
+        name = "nathan";
+        canSudo = false;
+        userConfigFile = user/nathan.nix;
+        extraConfigArgs = inputs;
       };
     };
     nixosConfigurations = {
@@ -35,7 +37,7 @@
           (import ./configuration.nix inputs)
           home-manager.nixosModules.home-manager
           nixosModules.nathan
-	  inputs.bunny.nixosModules.bunny-sshworthy
+	  # inputs.bunny.nixosModules.bunny-sshworthy
           (mkTailnet {
             ssh = false;
           })
