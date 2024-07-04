@@ -21,6 +21,7 @@ in {
     nixvim.homeManagerModules.nixvim
     catppuccin.homeManagerModules.catppuccin
   ];
+} // rec {
   system.hashedPassword = "$y$j9T$lfDMkzctZ7jVUA.rK6U/3/$stLjTnRqME75oum.040Ya7tKAPsnIJ.gAZYQk57vNp2";
   system.userDescription = "PoolloverNathan";
   catppuccin = {
@@ -45,8 +46,8 @@ in {
     xclip
     xsel;
     # nethack_ = nethack.packages.${pkgs.system}.default;
-    # inherit (pkgs.jetbrains)
-    # idea-community;
+    inherit (pkgs.jetbrains)
+    idea-community;
     discord = pkgs.discord.override {
       withOpenASAR = true;
       withVencord = true;
@@ -56,7 +57,6 @@ in {
     #   # patches = [./vencord-no-required.patch];
     #   # patchFlags = ["-p0"];
     # };
-    fok-quote = fokquote.packages.${pkgs.system}.default;
   };
   # let powerline access catppuccin
   home.file.".config/powerline/colors.json".text = builtins.toJSON {
@@ -152,18 +152,38 @@ in {
             esac
           ''
           ).outPath;
+        profileExtra = ''
+          ${fokquote.packages.${pkgs.system}.default}/bin/fokquote
+        '';
       };
     };
     emacs.enable = true;
     fastfetch.enable = true;
     firefox.enable = true;
     gh.enable = true;
+    gh.settings.git_protocol = "ssh";
     htop.enable = true;
     kitty.enable = true;
+    kitty.font = {
+      name = "JetBrains Mono";
+      package = pkgs.jetbrains-mono;
+    };
     nixvim = {
       enable = true;
-      colorschemes.catppuccin.enable = true;
-      plugins.lightline.enable = true;
+      colorschemes.catppuccin = {
+        enable = true;
+        settings = {
+          flavour = catppuccin.flavor;
+          disable_italic = true;
+          integrations = {
+            gitsigns = true;
+          };
+        };
+      };
+      plugins = {
+        gitsigns.enable = true;
+        lightline.enable = true;
+      };
     };
     powerline-go = {
       enable = true;
