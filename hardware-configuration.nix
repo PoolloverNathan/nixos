@@ -31,14 +31,15 @@ in
       fsType = "ext4";
     };
   fileSystems."/nix/persist" =
-    { device = "/dev/disk/by-uuid/4473c8f2-f123-43bb-9a93-6a457f387f3f";
-      fsType = "ext4";
+    { device = "/dev/disk/by-uuid/3e7f0b86-c914-45d7-9ab7-cae2669bd250";
+      fsType = "btrfs";
       neededForBoot = true;
+      autoFormat = true;
     };
-  fileSystems."/home/nathan" = bindMount /nix/persist/home/nathan;
-  fileSystems."/root" = bindMount /nix/persist/root;
-  fileSystems."/etc/nixos" = bindMount /nix/persist/etc/nixos;
-  fileSystems."/var/lib" = bindMount /nix/persist/var/lib;
+  fileSystems."/home" = bindMount /nix/persist2/home;
+  fileSystems."/root" = bindMount /nix/persist2/root2;
+  fileSystems."/etc/nixos" = bindMount /nix/persist2/nixos;
+  fileSystems."/var/lib" = bindMount /nix/persist2/var;
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/0EE0-12DA";
