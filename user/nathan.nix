@@ -5,6 +5,7 @@
   pkgs,
 
   catppuccin,
+  catppuccin-qt5ct,
   fokquote,
   home-manager,
   # nethack,
@@ -81,7 +82,14 @@ in {
       };
     };
   };
-  # home.file.".config/powerline/themes/"
+  # Manual Catppuccin qt5ct
+  xdg.configFile."qt5ct/colors/catppuccin.conf".source =
+    "${catppuccin-qt5ct}/themes/Catppuccin-${{
+      latte = "Latte";
+      frappe = "Frappe";
+      macchiato = "Macchiato";
+      mocha = "Mocha";
+    }.${catppuccin.flavor}}.conf";
   programs = {
     bash = {
       enable = true;

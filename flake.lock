@@ -37,6 +37,22 @@
         "type": "github"
       }
     },
+    "catppuccin-qt5ct": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1679416147,
+        "narHash": "sha256-t/uyK0X7qt6qxrScmkTU2TvcVJH97hSQuF0yyvSO/qQ=",
+        "owner": "catppuccin",
+        "repo": "qt5ct",
+        "rev": "89ee948e72386b816c7dad72099855fb0d46d41e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "qt5ct",
+        "type": "github"
+      }
+    },
     "catppuccin_2": {
       "locked": {
         "lastModified": 1719457243,
@@ -573,6 +589,7 @@
       "inputs": {
         "bunny": "bunny",
         "catppuccin": "catppuccin_2",
+        "catppuccin-qt5ct": "catppuccin-qt5ct",
         "fokquote": "fokquote",
         "home-manager": "home-manager_2",
         "nixpkgs": "nixpkgs_4",

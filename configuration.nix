@@ -44,6 +44,7 @@ inputs:
       enable = true;
       device = "nodev";
       efiSupport = true;
+      catppuccin.enable = true;
     };
   };
 
