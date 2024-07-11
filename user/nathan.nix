@@ -21,8 +21,15 @@ in {
   imports = [
     nixvim.homeManagerModules.nixvim
     catppuccin.homeManagerModules.catppuccin
+    {
+      options.repl = lib.mkOption {
+        type = lib.types.attrs;
+        default = {};
+      };
+    }
   ];
 } // rec {
+  system.shell = pkgs.fish + /bin/fish;
   system.hashedPassword = "$y$j9T$lfDMkzctZ7jVUA.rK6U/3/$stLjTnRqME75oum.040Ya7tKAPsnIJ.gAZYQk57vNp2";
   system.userDescription = "PoolloverNathan";
   catppuccin = {
@@ -90,11 +97,11 @@ in {
       macchiato = "Macchiato";
       mocha = "Mocha";
     }.${catppuccin.flavor}}.conf";
+  # Minecraft assets
+  # home.file."minecraft-assets".source = builtins.getFlake github:inventivetalentdev/minecraft-assets?rev=af628ec0e7977ec2f07c917d51413b4618a8cfcc&flake=false;
   programs = {
-    bash = {
+    fish = {
       enable = true;
-      historyControl = ["ignoredups" "ignorespace"];
-      historySize = -1;
       shellAliases = {
         sudo = "sudo -p ${lib.escapeShellArg "${sgr0}${ctpf "base"}${ctpb "flamingo"} sudo ${ctpf "flamingo"}${ctpb "surface0"}${ctpf "text"} password for nathan ${sgr0}${ctpf "surface0"}${sgr0} "} ";
         nixos = (
@@ -193,11 +200,21 @@ in {
         lightline.enable = true;
       };
     };
-    powerline-go = {
+    # powerline-go = {
+    #   enable = true;
+    #   modules = ["exit" "jobs" "host" "cwd" "gitlite"];
+    #   pathAliases."\\~" = "~";
+    #   settings.alternate-ssh-icon = true;
+    #   extraUpdatePS1 = ''
+    #     export PS1="$PS1
+    #     └ "
+    #     export PS2="[A│
+    #     └ "
+    #   '';
+    # };
+    starship = {
       enable = true;
-      modules = ["exit" "jobs" "host" "cwd" "gitlite"];
-      pathAliases."\\~" = "~";
-      settings.alternate-ssh-icon = true;
+      enableFishIntegration = true;
     };
     ssh = {
       enable = true;
