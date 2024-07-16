@@ -21,14 +21,14 @@
         uid = 1471;
         name = "nathan";
         canSudo = true;
-        userConfigFile = user/nathan.nix;
+        userConfigFile = user/nathan;
         extraConfigArgs = inputs;
       };
       nathan-nosudo = defineUser {
         uid = 1471;
         name = "nathan";
         canSudo = false;
-        userConfigFile = user/nathan.nix;
+        userConfigFile = user/nathan;
         extraConfigArgs = inputs;
       };
     };
