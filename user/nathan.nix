@@ -151,8 +151,8 @@ in {
       enable = true;
       # inherit (home) sessionVariables;
       shellAliases = {
-        sudo = "sudo -p ${lib.escapeShellArg "${sgr0}${ctpf "base"}${ctpb "flamingo"} sudo ${ctpf "flamingo"}${ctpb "surface0"}${ctpf "text"} password for nathan ${sgr0}${ctpf "surface0"}${sgr0} "} ";
-        profileExtra = ''
+        sudo = /*fish*/"sudo -p ${lib.escapeShellArg "${sgr0}${ctpf "base"}${ctpb "flamingo"} sudo ${sgr0}${ctpf "flamingo"}${sgr0} confirm password "} ";
+        profileExtra = /*fish*/ ''
           ${fokquote.packages.${pkgs.system}.default}/bin/fokquote
         '';
       };
@@ -181,7 +181,7 @@ in {
         settings = {
           flavour = catppuccin.flavor;
           disable_italic = true;
-          custom_highlights = ''
+          custom_highlights = /*lua*/''
             function(colo)
               return {
                 ModeMsg = {
@@ -254,7 +254,7 @@ in {
     Unit.Description = "Visual Studio Code web server (port 2352)";
     Install.WantedBy = ["default.target"];
     Service.ExecStart = "${pkgs.writers.writeBash "start-vscode-server" ''
-      NIXPKGS_ALLOW_UNFREE=1 ${pkgs.nix}/bin/nix-shell ${pkgs.writeText "vscode-server.nix" ''
+      NIXPKGS_ALLOW_UNFREE=1 ${pkgs.nix}/bin/nix-shell ${pkgs.writeText "vscode-server.nix" /*nix*/''
         with import ${nixpkgs} {};
         mkShell {
           buildInputs = [vscode nodejs nix gcc];
