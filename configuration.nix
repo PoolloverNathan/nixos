@@ -217,6 +217,9 @@ inputs:
       isNormalUser = true;
       # packages = import /home/foko/.config/pkgs.nix { inherit pkgs; };
       initialHashedPassword = "";
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEgTxm0wBvRg8YSezwHvRYOhKT7G8lv5JtrlGNp5gkg7 foko@fokolaptop"
+      ];
     };
     bunny = {
       uid = 1005;
