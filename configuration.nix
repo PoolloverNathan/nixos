@@ -20,6 +20,7 @@ inputs:
     keep-outputs = true;
     keep-derivations = true;
     trusted-users = ["root" "@wheel"];
+    allow-unsafe-native-code-during-evaluation = true;
   };
   nixpkgs.config.allowUnfree = true;
 
@@ -177,6 +178,11 @@ inputs:
   };
   security.rtkit.enable = true;
 
+  # security.pam.oath.enable = true;
+  environment.etc."users.oath".text = ''
+    
+  '';
+
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
@@ -291,7 +297,7 @@ inputs:
       safe.directory = "*";
     };
   };
-
+  programs.steam.enable = true;
 
   # {{{ nrb = sudo nixos-rebuild
   # }}} nrb = sudo nixos-rebuild
