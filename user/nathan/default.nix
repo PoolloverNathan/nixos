@@ -74,37 +74,58 @@ in {
     #   # patchFlags = ["-p0"];
     # };
     nixos =
-      pkgs.writers.writeBashBin "nixos" ''
-        set -euo pipefail
-        op="$1"
-        shift
-        alias tput="tty -s && tput"
-        case "$op" in
-          rb|rebuild|sw|switch)
-            nixos-rebuild switch "$@";;
-          t|test)
-            nixos-rebuild test "$@";;
-          gen)
-            nixos-generate-config "$@";;
-          b|build|dry-build)
-            nixos-rebuild build "$@";;
-          d|dry|dry-activate)
-            nixos-rebuild dry-activate;;
-          u|up|update|upgrade)
-            if [ $# == 0 ]; then
-              args=(--recreate-lock-file)
-            else
-              args=()
-              for input; do
-                args+=(--update-input "$input")
-              done
-            fi
-            nix flake lock /etc/nixos "''${args[@]}";;
-          viuser)
-            eval "''${EDITOR-nano}" /etc/nixos/user/`whoami`.nix;;
-          *)
-            echo "Unknown operation."
-        esac
+      pkgs.runCommand "nixos" {} ''
+        mkdir -p $out/{bin,etc/fish/completions}
+        cd $out
+        cp ${pkgs.writers.writeBash "nixos-bin" ''
+          set -euo pipefail
+          op="$1"
+          shift
+          alias tput="tty -s && tput"
+          case "$op" in
+            rb|rebuild|sw|switch)
+              nixos-rebuild switch "$@";;
+            t|test)
+              nixos-rebuild test "$@";;
+            gen)
+              nixos-generate-config "$@";;
+            b|build|dry-build)
+              nixos-rebuild build "$@";;
+            d|dry|dry-activate)
+              nixos-rebuild dry-activate;;
+            u|up|update|upgrade)
+              if [ $# == 0 ]; then
+                args=(--recreate-lock-file)
+              else
+                args=()
+                for input; do
+                  args+=(--update-input "$input")
+                done
+              fi
+              nix flake lock /etc/nixos "''${args[@]}";;
+            viuser)
+              eval "''${EDITOR-nano}" /etc/nixos/user/`whoami`.nix;;
+            *)
+              echo "Unknown operation."
+          esac
+        ''} bin/nixos
+        cp ${builtins.toFile "nixos-completions.fish" /*fish*/''
+          begin
+            set c complete -c nixos
+            set cmd_switch rb rebuild sw switch
+            set cmd_test t test
+            set cmd_swtest $cmd_switch $cmd_test
+            set cmd_build b build dry-build
+            set cmd_dry d dry dry-activate
+            set cmd_up u up update upgrade
+            set cmds $cmd_swtest $cmd_build $cmd_dry $cmd_up
+            $c -n "not __fish_seen_subcommand_from $cmds" -a "$cmds"
+            $c -n "__fish_seen_subcommand_from $cmd_switch" -w "nixos-rebuild switch"
+            $c -n "__fish_seen_subcommand_from $cmd_test" -w "nixos-rebuild test"
+            $c -n "__fish_seen_subcommand_from $cmd_build" -w "nixos-rebuild build"
+            $c -n "__fish_seen_subcommand_from $cmd_dry" -w "nixos-rebuild dry-activate"
+          end
+        ''} etc/fish/completions/nixos.fish
       '';
   };
   # let powerline access catppuccin
