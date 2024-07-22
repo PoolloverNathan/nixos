@@ -175,6 +175,17 @@ inputs:
     '';
     jellyfin.enable = true;
     jellyfin.openFirewall = true;
+    # dnsmasq.enable = true;
+    dnsmasq.settings = {
+      domain-needed = true;
+      server = [
+        "2a07:a8c0::ef:ea54"
+        "2a07:a8c1::ef:ea54"
+        "45.90.28.207"
+        "45.90.30.207"
+      ];
+      local = "home";
+    };
   };
   security.rtkit.enable = true;
 
@@ -187,7 +198,6 @@ inputs:
   # services.printing.enable = true;
 
   # Enable sound.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
 
   # Enable touchpad support (enabled default in most desktopManager).

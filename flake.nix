@@ -43,6 +43,7 @@
 	  # inputs.bunny.nixosModules.bunny-sshworthy
           (mkTailnet {
             ssh = false;
+	    extraFlags = ["--no-accept-dns"];
           })
         ];
       };
