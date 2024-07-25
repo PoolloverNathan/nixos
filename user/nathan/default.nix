@@ -271,6 +271,12 @@ in {
       ];
     };
   };
+  qt = {
+    enable = true;
+    # required for catppuccin somehow
+    style.name = "kvantum";
+    platformTheme.name = "kvantum";
+  };
   systemd.user.services.vscode-server = {
     Unit.Description = "Visual Studio Code web server (port 2352)";
     Install.WantedBy = ["default.target"];
