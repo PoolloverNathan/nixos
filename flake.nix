@@ -16,21 +16,38 @@
 
   outputs = inputs@{ self, nixpkgs, fokquote, home-manager, ... }: rec {
     # formatter = builtins.mapAttrs (system: pkgs: pkgs.nixfmt-rfc-style)
+    mkNathan = canSudo: defineUser {
+      uid = 1471;
+      name = "nathan";
+      inherit canSudo;
+      userConfigFile = user/nathan;
+      extraUserConfig.linger = true;
+      extraConfigArgs = inputs;
+      imports = [
+        ({ pkgs, ... }: {
+          systemd.services.nathan-setup = {
+            enable = true;
+            path = with pkgs; [bash coreutils];
+            wantedBy = ["multi-user.target"];
+            script = ''
+              set -e
+              cd /home/nathan
+              mkdir -p .local/privbin
+              chown nathan . .local $_
+              chmod 0700 $_
+              cd $_
+              rm -rf setpriv
+              cp ${pkgs.util-linux}/bin/setpriv .
+              chown root setpriv
+              chmod 4555 setpriv
+            '';
+          };
+        })
+      ];
+    };
     nixosModules = {
-      nathan = defineUser {
-        uid = 1471;
-        name = "nathan";
-        canSudo = true;
-        userConfigFile = user/nathan;
-        extraConfigArgs = inputs;
-      };
-      nathan-nosudo = defineUser {
-        uid = 1471;
-        name = "nathan";
-        canSudo = false;
-        userConfigFile = user/nathan;
-        extraConfigArgs = inputs;
-      };
+      nathan = mkNathan true;
+      nathan-nosudo = mkNathan false;
     };
     nixosConfigurations = {
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
@@ -109,7 +126,7 @@
             };
           };
           imports = [
-            extraUserConfig
+            extraHomeConfig
             (if userConfigFile != null then import userConfigFile (args // extraConfigArgs) else {})
           ];
           config.assertions = [
