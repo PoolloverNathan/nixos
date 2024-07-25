@@ -139,9 +139,8 @@ inputs:
     };
     xserver = {
       enable = true;
-      desktopManager.plasma5 = {
-        enable = true;
-      };
+      desktopManager.plasma5.enable = true;
+      desktopManager.xfce.enable = true;
     };
     openssh.enable = true;
     openssh.settings = {
