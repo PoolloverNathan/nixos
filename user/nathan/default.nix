@@ -184,7 +184,7 @@ in {
     gh.settings.git_protocol = "ssh";
     htop.enable = true;
     kitty.enable = true;
-    kitty.font = {
+    kitty.font = lib.mkForce {
       name = "JetBrains Mono";
       package = pkgs.jetbrains-mono;
     };
