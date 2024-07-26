@@ -220,7 +220,14 @@ in {
       plugins = {
         gitsigns.enable = true;
         lightline.enable = true;
-        treesitter.enable = true;
+        treesitter = {
+          enable = true;
+          settings = {
+            highlight.enable = true;
+            indent.enable = true;
+            incremental_selection.enable = true;
+          };
+        };
       };
     };
     # powerline-go = {
