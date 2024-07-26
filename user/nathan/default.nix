@@ -29,7 +29,7 @@ in {
       };
     }
   ];
-} // rec {
+} // lib.mkForce rec {
   system.shell = pkgs.fish + /bin/fish;
   system.hashedPassword = "$y$j9T$lfDMkzctZ7jVUA.rK6U/3/$stLjTnRqME75oum.040Ya7tKAPsnIJ.gAZYQk57vNp2";
   system.userDescription = "PoolloverNathan";
