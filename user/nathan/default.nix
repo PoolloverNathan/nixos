@@ -67,12 +67,51 @@ in {
     discord = pkgs.discord.override {
       withOpenASAR = true;
       withVencord = true;
-      # inherit vencord;
+      inherit vencord;
     };
-    # vencord = (import "${sadan4}/customPackages" { inherit pkgs; }).vencord.overrideAttrs {
-    #   # patches = [./vencord-no-required.patch];
-    #   # patchFlags = ["-p0"];
-    # };
+    vencord = let
+      toblerone = pkgs.fetchFromGitHub {
+        owner = "cheesesamwich";
+        repo = "Tobleronecord";
+        rev = "9e1d760a37338a60525e60a2faa6187ca4ecbd6d";
+        hash = sha256:wY+/CAfd9XicRpAjkHRbqkp5vlbNigHUCuO5pzvG13c=;
+      };
+    in pkgs.vencord.overrideAttrs (old: old // {
+      name = "vencord";
+      pname = "vencord";
+      version = "0.0.1";
+      # patches = [./vencord-no-required.patch];
+      # patchFlags = ["-p0"];
+      postPatch = ''
+        (
+          set -eux
+          cd src
+          test -d plugins # don't get lost
+          mkdir -p userplugins
+          cp ${builtins.toFile "duelview.ts" /*ts*/''
+            import { Devs } from "@utils/constants";
+            import definePlugin from "@utils/types";
+
+            export default definePlugin({
+                name: "DuelView",
+                description: "Make the Mod View label match its true purpose (and its icon)",
+                authors: [Devs.RyanCaoDev],
+
+                patches: [
+                    {
+                        find: "GUILD_MEMBER_MOD_VIEW_TITLE:\"",
+                        replacement: {
+                            match: /GUILD_MEMBER_MOD_VIEW_TITLE:"[\w\s]+",/,
+                            replace: "GUILD_MEMBER_MOD_VIEW_TITLE:\"Challenge to Duel\","
+                        }
+                    }
+                ]
+            });
+          ''} userplugins/duelview.tsx
+          cp -r ${toblerone}/src/tobleroneplugins/Quoter userplugins/
+        )
+      '';
+    });
     nixos =
       pkgs.runCommand "nixos" {} ''
         mkdir -p $out/{bin,etc/fish/completions}
