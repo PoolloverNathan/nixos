@@ -49,11 +49,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1722543954,
-        "narHash": "sha256-edwohoSIalMBsCJqzKKbguhG1v/SsyNSoBkzwS2+Ung=",
+        "lastModified": 1722544322,
+        "narHash": "sha256-jiRkbFcB9FytZ26ZbRhJXeYySoxkpOwJ9VZ4GarO8KE=",
         "owner": "TheBunnyMan123",
         "repo": "nixos-config",
-        "rev": "15dcca997bec3f940baa38fec42cab59147496d0",
+        "rev": "68360e359c11446a44e59508ede5806b8377b75b",
         "type": "github"
       },
       "original": {
