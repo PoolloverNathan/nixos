@@ -105,9 +105,9 @@ in {
       ] ++ lib.mapAttrsToList (name: value: {
         "Vencord/themes/${name}.css".source = value;
       }) vencord.themes);
-      programs.vencord.postPatch = lib.concatLines (lib.optional (vencord.userPlugins != {}) "mkdir -p src/userPlugins" ++ lib.mapAttrsToList (name: path: "ln -s ${lib.escapeShellArg path} src/userPlugins/${lib.escapeShellArg name}") vencord.userPlugins);
+      programs.vencord.postPatch = lib.concatLines (lib.optional (vencord.userPlugins != {}) "mkdir -vp src/userplugins" ++ lib.mapAttrsToList (name: path: "ln -vs ${lib.escapeShellArg path} src/userplugins/${lib.escapeShellArg name}") vencord.userPlugins);
       home.packages =
-        lib.optional vencord.enable (pkgs.discord.override { withVencord = true; vencord = applyPostPatch vencord.package; })
+        lib.optional vencord.enable (pkgs.discord.override { withVencord = true; vencord = applyPostPatch vencord.package; } // { vencord = applyPostPatch vencord.package; })
        ++ lib.optional vesktop.enable (applyPostPatch vesktop.package);
     };
 }
