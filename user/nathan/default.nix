@@ -22,6 +22,7 @@ in {
   imports = [
     nixvim.homeManagerModules.nixvim
     catppuccin.homeManagerModules.catppuccin
+    ./vencord.nix
     {
       options.repl = lib.mkOption {
         type = lib.types.attrs;
@@ -30,6 +31,7 @@ in {
     }
   ];
 } // rec {
+  nixpkgs.config.allowUnfree = true;
   system.shell = pkgs.fish + /bin/fish;
   system.hashedPassword = "$y$j9T$lfDMkzctZ7jVUA.rK6U/3/$stLjTnRqME75oum.040Ya7tKAPsnIJ.gAZYQk57vNp2";
   system.userDescription = "PoolloverNathan";
@@ -42,9 +44,6 @@ in {
     flavor = "frappe";
     accent = "sky";
   };
-  xdg.configFile."Vencord/settings/quickCss.css".text = /*css*/''
-    @import url(https://catppuccin.github.io/discord/dist/catppuccin-${catppuccin.flavor}-${catppuccin.accent}.theme.css);
-  '';
   home.stateVersion = "24.11";
   home.packages = builtins.attrValues rec {
     inherit (pkgs)
@@ -64,54 +63,6 @@ in {
     # nethack_ = nethack.packages.${pkgs.system}.default;
     inherit (pkgs.jetbrains)
     idea-community;
-    discord = pkgs.discord.override {
-      withOpenASAR = true;
-      withVencord = true;
-      inherit vencord;
-    };
-    vencord = let
-      toblerone = pkgs.fetchFromGitHub {
-        owner = "cheesesamwich";
-        repo = "Tobleronecord";
-        rev = "9e1d760a37338a60525e60a2faa6187ca4ecbd6d";
-        hash = sha256:wY+/CAfd9XicRpAjkHRbqkp5vlbNigHUCuO5pzvG13c=;
-      };
-    in pkgs.vencord.overrideAttrs (old: old // {
-      name = "vencord";
-      pname = "vencord";
-      version = "0.0.1";
-      # patches = [./vencord-no-required.patch];
-      # patchFlags = ["-p0"];
-      postPatch = ''
-        (
-          set -eux
-          cd src
-          test -d plugins # don't get lost
-          mkdir -p userplugins
-          cp ${builtins.toFile "duelview.ts" /*ts*/''
-            import { Devs } from "@utils/constants";
-            import definePlugin from "@utils/types";
-
-            export default definePlugin({
-                name: "DuelView",
-                description: "Make the Mod View label match its true purpose (and its icon)",
-                authors: [Devs.RyanCaoDev],
-
-                patches: [
-                    {
-                        find: "GUILD_MEMBER_MOD_VIEW_TITLE:\"",
-                        replacement: {
-                            match: /GUILD_MEMBER_MOD_VIEW_TITLE:"[\w\s]+",/,
-                            replace: "GUILD_MEMBER_MOD_VIEW_TITLE:\"Challenge to Duel\","
-                        }
-                    }
-                ]
-            });
-          ''} userplugins/duelview.tsx
-          cp -r ${toblerone}/src/tobleroneplugins/Quoter userplugins/
-        )
-      '';
-    });
     nixos =
       pkgs.runCommand "nixos" {} ''
         mkdir -p $out/{bin,etc/fish/completions}
@@ -132,6 +83,8 @@ in {
               nixos-rebuild build "$@";;
             d|dry|dry-activate)
               nixos-rebuild dry-activate;;
+            repl|i)
+              nixos-rebuild repl;;
             u|up|update|upgrade)
               if [ $# == 0 ]; then
                 args=(--recreate-lock-file)
@@ -141,7 +94,7 @@ in {
                   args+=(--update-input "$input")
                 done
               fi
-              nix flake lock /etc/nixos "''${args[@]}";;
+              nix flake lock /etc/nixos --commit-lock-file "''${args[@]}";;
             viuser)
               eval "''${EDITOR-nano}" /etc/nixos/user/`whoami`.nix;;
             *)
@@ -167,37 +120,6 @@ in {
         ''} etc/fish/completions/nixos.fish
       '';
   };
-  # let powerline access catppuccin
-  home.file.".config/powerline/colors.json".text = builtins.toJSON {
-    colors = lib.mapAttrs (_: { hex, ... }: [27 (builtins.substring 1 6 hex)]) ctpPalette;
-    gradients = {};
-  };
-  home.file.".config/powerline/colorschemes/catppuccin.json".text = builtins.toJSON {
-    ext.bash.colorscheme = "catppuccin";
-    groups = {
-      cwd = {
-        fg = "text";
-        bg = "surface0";
-      };
-      "cwd:divider" = {
-        fg = "subtext";
-        bg = "surface0";
-      };
-      "cwd:current_folder" = {
-        fg = "text";
-        bg = "surface0";
-        attrs = ["bold"];
-      };
-    };
-  };
-  # Manual Catppuccin qt5ct
-  xdg.configFile."qt5ct/colors/catppuccin.conf".source =
-    "${catppuccin-qt5ct}/themes/Catppuccin-${{
-      latte = "Latte";
-      frappe = "Frappe";
-      macchiato = "Macchiato";
-      mocha = "Mocha";
-    }.${catppuccin.flavor}}.conf";
   # Minecraft assets
   home.file.".local/share/mc-assets/1.20.1".source = pkgs.fetchFromGitHub {
     name = "mc1.20.1";
@@ -269,18 +191,6 @@ in {
         };
       };
     };
-    # powerline-go = {
-    #   enable = true;
-    #   modules = ["exit" "jobs" "host" "cwd" "gitlite"];
-    #   pathAliases."\\~" = "~";
-    #   settings.alternate-ssh-icon = true;
-    #   extraUpdatePS1 = ''
-    #     export PS1="$PS1
-    #     └ "
-    #     export PS2="[A│
-    #     └ "
-    #   '';
-    # };
     starship = {
       enable = true;
       enableFishIntegration = true;
@@ -289,7 +199,8 @@ in {
       enable = true;
       matchBlocks = {
         bunny = {
-          host = "nixos.kamori-ghoul.ts.net";
+          host = "bunny";
+          hostname = "nixos-desktop.kamori-ghoul.ts.net";
           port = 2222;
         };
       };
@@ -299,6 +210,77 @@ in {
       enableBashIntegration = true;
     };
     tmux.enable = true;
+    vencord = {
+      enable = true;
+      themes = {
+        catppuccin = pkgs.fetchurl {
+          url = "https://catppuccin.github.io/discord/dist/catppuccin-${catppuccin.flavor}-${catppuccin.accent}.theme.css";
+          hash = sha256:uaYo7x0YHw0dJlzP6loIiQFxCU4HPvAUwiqQnaTZxn4=;
+        };
+      };
+      plugins = {
+        atSomeone.enabled = true;
+        AutomodContext.enabled = true;
+        BetterFolders.enabled = true;
+        BetterRoleContext.enabled = true;
+        ConsoleShortcuts.enabled = true;
+        DuelView.enabled = true;
+        Experiments.enabled = true;
+        FakeNitro.enabled = true;
+        ForceOwnerCrown.enabled = true;
+        FriendInvites.enabled = true;
+        ImageLink.enabled = true;
+        LoginWithQR.enabled = true;
+        MessageLoggerEnhanced.enabled = true;
+        MessageTags.enabled = true;
+        NewPluginsManager.enabled = true;
+        NoTrack.enabled = true; # required
+        NoTypingAnimation.enabled = true;
+        NoUnblockToJump.enabled = true;
+        PermissionsViewer.enabled = true;
+        Quoter.enabled = true;
+        ReactErrorDecoder.enabled = true;
+        Settings.enabled = true; # required
+        ShowAllRoles.enabled = true;
+        ShowHiddenChannels.enabled = true;
+        ShowHiddenThings.enabled = true;
+        ShowTimeoutDuration.enabled = true;
+        Summaries.enabled = true;
+        SupportHelper.enabled = false; # required
+        TypingIndicator.enabled = true;
+        TypingTweaks.enabled = true;
+        ValidReply.enabled = true;
+        ValidUser.enabled = true;
+        ViewIcons.enabled = true;
+        ViewRaw.enabled = true;
+      };
+      userPlugins = {
+        NewPluginsManager = github:sqaaakoi/vc-newpluginsmanager/6f6fa79ea1dabaebf3c176eb1e61a4a80c6d9f97;
+        LoginWithQR = github:nexpid/loginwithqr/4e5ef3fb8798a36e962f0a5a4cdbe6daac667fa3;
+        atSomeone = github:masterjoona/vc-atsomeone/a58ff70a62a36db7ceff54d63bec3b5a6c9934ac;
+        MessageLoggerEnhanced = github:syncxv/vc-message-logger-enhanced/3fb2fe04b8e38813290309836983309a83ffe00c;
+        "DuelView.tsx" = pkgs.writeText "DuelView.tsx" /*ts*/''
+          import { Devs } from "@utils/constants";
+          import definePlugin from "@utils/types";
+
+          export default definePlugin({
+            name: "DuelView",
+            description: "Make the Mod View label match its true purpose (and its icon)",
+            authors: [Devs.RyanCaoDev],
+
+            patches: [
+              {
+                find: "GUILD_MEMBER_MOD_VIEW_TITLE:\"",
+                replacement: {
+                  match: /GUILD_MEMBER_MOD_VIEW_TITLE:"[\w\s]+",/,
+                  replace: "GUILD_MEMBER_MOD_VIEW_TITLE:\"Challenge to Duel\","
+                }
+              }
+            ]
+          });
+        '';
+      };
+    };
     vscode = let
       nix-vscode-extensions = builtins.getFlake github:nix-community/nix-vscode-extensions/0a162b8f1f19d55ee282927b9f6aefe3fff7116a;
       vscode = pkgs.vscodium;
@@ -323,19 +305,19 @@ in {
     style.name = "kvantum";
     platformTheme.name = "kvantum";
   };
-  systemd.user.services.vscode-server = {
-    Unit.Description = "Visual Studio Code web server (port 2352)";
-    Install.WantedBy = ["default.target"];
-    Service.ExecStart = "${pkgs.writers.writeBash "start-vscode-server" ''
-      NIXPKGS_ALLOW_UNFREE=1 ${pkgs.nix}/bin/nix-shell ${pkgs.writeText "vscode-server.nix" /*nix*/''
-        with import ${nixpkgs} {};
-        mkShell {
-          buildInputs = [vscode nodejs nix gcc];
-          shellHook = "code serve-web --without-connection-token --host 0.0.0.0 --port 2352";
-          NIX_LD = lib.fileContents "''${stdenv.cc}/nix-support/dynamic-linker";
-          NIX_LD_LIBRARY_PATH = lib.makeLibraryPath [stdenv.cc.cc.lib];
-        }
-      ''}
-    ''}";
-  };
+  # systemd.user.services.vscode-server = {
+  #   Unit.Description = "Visual Studio Code web server (port 2352)";
+  #   Install.WantedBy = ["default.target"];
+  #   Service.ExecStart = "${pkgs.writers.writeBash "start-vscode-server" ''
+  #     NIXPKGS_ALLOW_UNFREE=1 ${pkgs.nix}/bin/nix-shell ${pkgs.writeText "vscode-server.nix" /*nix*/''
+  #       with import ${nixpkgs.outPath} {};
+  #       mkShell {
+  #         buildInputs = [vscode nodejs nix gcc];
+  #         shellHook = "code serve-web --without-connection-token --host 0.0.0.0 --port 2352";
+  #         NIX_LD = lib.fileContents "''${stdenv.cc}/nix-support/dynamic-linker";
+  #         NIX_LD_LIBRARY_PATH = lib.makeLibraryPath [stdenv.cc.cc.lib];
+  #       }
+  #     ''}
+  #   ''}";
+  # };
 }
