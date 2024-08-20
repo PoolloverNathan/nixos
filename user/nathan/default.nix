@@ -215,7 +215,7 @@ in {
       themes = {
         catppuccin = pkgs.fetchurl {
           url = "https://catppuccin.github.io/discord/dist/catppuccin-${catppuccin.flavor}-${catppuccin.accent}.theme.css";
-          hash = sha256:uaYo7x0YHw0dJlzP6loIiQFxCU4HPvAUwiqQnaTZxn4=;
+          hash = sha256:qcMWtlRM+3/1yHws0BBZznka/OEAYTLtaK8d6cMepo4=;;
         };
       };
       plugins = {
