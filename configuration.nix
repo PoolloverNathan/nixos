@@ -29,7 +29,7 @@ inputs:
     powerOnBoot = true;
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_6_9;
+  boot.kernelPackages = pkgs.linuxPackages_6_10;
   # boot.crashDump.enable = true;
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
