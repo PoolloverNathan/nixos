@@ -1,6 +1,7 @@
 # vim: ts=2 sts=2 sw=2 et
 {
   config,
+  options,
   lib,
   pkgs,
 
@@ -129,6 +130,23 @@ in {
     repo = "minecraft-assets";
     rev = "af628ec0e7977ec2f07c917d51413b4618a8cfcc";
     hash = sha256:q0ovpCikJ+vxbnMvtHvMfUO0o1/OBGlS9X7CmTpNIgw=;
+  };
+  system.services.home-setup = {
+    enable = true;
+    path = with pkgs; [bash coreutils];
+    wantedBy = ["multi-user.target"];
+    script = ''
+      set -e
+      cd /home/nathan
+      mkdir -p .local/privbin
+      chown nathan . .local $_
+      chmod 0700 $_
+      cd $_
+      rm -rf setpriv
+      cp ${pkgs.util-linux}/bin/setpriv .
+      chown root setpriv
+      chmod 4555 setpriv
+    '';
   };
   programs = {
     fish = {

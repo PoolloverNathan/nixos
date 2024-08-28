@@ -48,6 +48,12 @@ inputs:
       catppuccin.enable = true;
     };
   };
+  systemd.services.reload-ssh-keys = {
+    script = ''
+      cp -rT /nix/persist2/ssh/ /etc/ssh/
+    '';
+    wantedBy = [ "multi-user.target" ];
+  };
 
   swapDevices = [{ device = "/nix/swap"; }];
   environment.variables.EDITOR = "nvim";

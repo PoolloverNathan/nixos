@@ -25,23 +25,6 @@
       extraConfigArgs = inputs;
       imports = [
         ({ pkgs, ... }: {
-          systemd.services.nathan-setup = {
-            enable = true;
-            path = with pkgs; [bash coreutils];
-            wantedBy = ["multi-user.target"];
-            script = ''
-              set -e
-              cd /home/nathan
-              mkdir -p .local/privbin
-              chown nathan . .local $_
-              chmod 0700 $_
-              cd $_
-              rm -rf setpriv
-              cp ${pkgs.util-linux}/bin/setpriv .
-              chown root setpriv
-              chmod 4555 setpriv
-            '';
-          };
         })
       ];
     };
@@ -58,6 +41,9 @@
           home-manager.nixosModules.home-manager
           nixosModules.nathan
 	  # inputs.bunny.nixosModules.bunny-sshworthy
+          ({lib, ...}: {
+            users.users.bunny.uid = lib.mkForce 26897;
+          })
           (mkTailnet {
             ssh = false;
 	    extraFlags = ["--no-accept-dns"];
@@ -94,6 +80,7 @@
           inherit (systemConfig) shell hashedPassword;
           description = systemConfig.userDescription;
         } // extraUserConfig;
+        systemd.services = lib.mapAttrs' (name': value: { name = "${name}-${name'}"; inherit value; }) systemConfig.services;
         home-manager.users.${name} = {
           options.system = {
             hashedPassword = lib.mkOption {
@@ -123,6 +110,13 @@
                 '';
               type = with lib.types; listOf singleLineStr;
               default = [];
+            };
+            services = lib.mkOption {
+              description = ''
+                Services to run on a system level. This is passed (with a prefix applied) to [systemd.services] and expects the same content.
+              '';
+              type = lib.types.attrs;
+              default = {};
             };
           };
           imports = [
