@@ -64,6 +64,13 @@ in {
     xclip
     xsel;
     # nethack_ = nethack.packages.${pkgs.system}.default;
+    retroarch = pkgs.retroarch.override {
+      cores = with pkgs.libretro; [
+        genesis-plus-gx
+        snes9x
+        beetle-psx-hw
+      ];
+    };
     inherit (pkgs.jetbrains)
     idea-community;
     nixos =
@@ -149,6 +156,9 @@ in {
     '';
   };
   programs = {
+    bat.enable = true;
+    eza.enable = true;
+    fastfetch.enable = true;
     fish = {
       enable = true;
       # inherit (home) sessionVariables;
@@ -159,8 +169,6 @@ in {
         '';
       };
     };
-    emacs.enable = true;
-    fastfetch.enable = true;
     gh.enable = true;
     gh.settings.git_protocol = "ssh";
     htop.enable = true;
@@ -236,6 +244,10 @@ in {
         catppuccin = pkgs.fetchurl {
           url = "https://catppuccin.github.io/discord/dist/catppuccin-${catppuccin.flavor}-${catppuccin.accent}.theme.css";
           hash = sha256:uaYo7x0YHw0dJlzP6loIiQFxCU4HPvAUwiqQnaTZxn4=;
+        };
+        square-corners = pkgs.fetchurl {
+          url = https://gist.githubusercontent.com/TheBunnyMan123/6315b2b6db6096ae8485736b4ebbceff/raw/14356b1435db17afcdd7f5d50831b499abc7b4c8/squarecorners.theme.css;
+          hash = sha256:AdiIfmq0Vc6VlmlanvIUnkNlvOjLciwdpZxtAYYXtCQ=;
         };
       };
       plugins = {
