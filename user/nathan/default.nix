@@ -163,6 +163,7 @@ in {
       enable = true;
       # inherit (home) sessionVariables;
       shellAliases = {
+        cosplay-god = "~/.local/privbin/setpriv --reuid nathan --ambient-caps +all --inh-caps +all fish";
         sudo = /*fish*/"sudo -p ${lib.escapeShellArg "${sgr0}${ctpf "base"}${ctpb "flamingo"} sudo ${sgr0}${ctpf "flamingo"}${sgr0} confirm password "} ";
         profileExtra = /*fish*/ ''
           ${fokquote.packages.${pkgs.system}.default}/bin/fokquote
