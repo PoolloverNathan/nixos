@@ -21,7 +21,7 @@
   systemd.services.pluginsearch = {
     upheldBy = ["nginx.service"];
     script = "${pkgs.writers.writeJS "pluginsearch" {
-      libraries = [./. pkgs.nodePackages.node-fetch]; 
+      libraries = [./.]; 
     } ''
       require("/etc/nixos/pluginsearch/index.js")
     ''}";
