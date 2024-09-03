@@ -12,6 +12,7 @@ inputs:
       ./hardware-configuration.nix
       # (builtins.fetchurl https://nathanlaptopv.axolotl-snake.ts.net/tailscale.nix)
       ./secrets.nix
+      ./pluginsearch
     ];
 
   nix.settings = {
@@ -106,8 +107,14 @@ inputs:
     nftables.enable = true;
     firewall = {
       enable = false;
-      allowedTCPPorts = [2423 2352 31337 6697];
+      allowedTCPPorts = [53 80 443 2423 2352 31337 6697];
       rejectPackets = true;
+    };
+    hosts = let
+      currentIP = "100.7.93.62";
+    in {
+      ${currentIP} = ["chromebook.ccpsnet.net" /*"discord.com"*/];
+      "0.0.0.0" = ["api.hapara.com" "hl.hapara.com"];
     };
   };
 
@@ -136,7 +143,12 @@ inputs:
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
-  services = {
+  services = rec {
+    dnsmasq = {
+      enable = true;
+      resolveLocalQueries = false;
+      # settings.server = ["8.8.8.8" "8.8.4.4"];
+    };
     postgresql = {
       enable = true;
       authentication = pkgs.lib.mkOverride 10 ''
@@ -173,6 +185,38 @@ inputs:
     #   description = "IRC server for PoolloverNathan's tailnet.";
     #   extraIPs = ["127.0.0.1"];
     # };
+    nginx = {
+      enable = true;
+      appendHttpConfig = ''
+        proxy_buffer_size 128k;
+        proxy_buffers 4 256k;
+        proxy_busy_buffers_size 256k;
+      '';
+      virtualHosts."chromebook.ccpsnet.net".root = pkgs.writeTextDir "hsaccessnew.pac" /*js*/ ''
+        function FindProxyForURL(url, host) {
+          return "DIRECT"
+        }
+      '';
+      virtualHosts."discord.com" = {
+        locations."/" = {
+          proxyPass = https://162.159.128.233/;
+          recommendedProxySettings = true;
+          priority = 1500;
+          extraConfig = ''
+            sub_filter '<head>' '<head><link href="/vencord.css"><script src="/vencord.js"></script>';
+            sub_filter_once on;
+          '';
+        };
+        locations."/vencord/" = {
+          proxyPass = https://github.com/Vendicated/Vencord/releases/download/devbuild/;
+          recommendedProxySettings = true;
+        };
+      };
+      virtualHosts."cache.pool.net.eu.org" = {
+        enableACME = true;
+        root = /nix/store;
+      };
+    };
     ngircd.enable = true;
     ngircd.config = ''
       [OPTIONS]
@@ -180,19 +224,12 @@ inputs:
     '';
     jellyfin.enable = true;
     jellyfin.openFirewall = true;
-    # dnsmasq.enable = true;
-    dnsmasq.settings = {
-      domain-needed = true;
-      server = [
-        "2a07:a8c0::ef:ea54"
-        "2a07:a8c1::ef:ea54"
-        "45.90.28.207"
-        "45.90.30.207"
-      ];
-      local = "home";
-    };
   };
   security.rtkit.enable = true;
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "nathan.kulzer@protonmail.com";
+  };
 
   # security.pam.oath.enable = true;
   environment.etc."users.oath".text = ''

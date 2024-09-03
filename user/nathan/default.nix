@@ -30,18 +30,6 @@ in {
         default = {};
       };
     }
-    {
-      config = lib.mkIf (options?stylix) {
-        stylix = {
-          enable = lib.mkForce false;
-          autoEnable = lib.mkForce false;
-        };
-        assertions = [
-          { assertion = !config.stylix.enable; message = "stylix is enabled"; }
-          { assertion = !config.stylix.autoEnable; message = "stylix is auto-enabled"; }
-        ];
-      };  
-    }
   ];
 } // rec {
   nixpkgs.config.allowUnfree = true;
@@ -66,13 +54,10 @@ in {
     ed
     eza
     fprintd
-    ghc
     glxinfo
     jdk17
-    # kde-connect
     prismlauncher
     python312Full
-    vscodium
     xclip
     xsel;
     # nethack_ = nethack.packages.${pkgs.system}.default;
@@ -83,8 +68,6 @@ in {
         beetle-psx-hw
       ];
     };
-    inherit (pkgs.jetbrains)
-    idea-community;
     nixos =
       pkgs.runCommand "nixos" {} ''
         mkdir -p $out/{bin,etc/fish/completions}
@@ -141,14 +124,6 @@ in {
           end
         ''} etc/fish/completions/nixos.fish
       '';
-  };
-  # Minecraft assets
-  home.file.".local/share/mc-assets/1.20.1".source = pkgs.fetchFromGitHub {
-    name = "mc1.20.1";
-    owner = "inventivetalentdev";
-    repo = "minecraft-assets";
-    rev = "af628ec0e7977ec2f07c917d51413b4618a8cfcc";
-    hash = sha256:q0ovpCikJ+vxbnMvtHvMfUO0o1/OBGlS9X7CmTpNIgw=;
   };
   system.services.home-setup = {
     enable = true;
@@ -225,6 +200,7 @@ in {
       plugins = {
         gitsigns.enable = true;
         lightline.enable = true;
+        surround.enable = true;
         treesitter = {
           enable = true;
           settings = {
@@ -267,10 +243,10 @@ in {
           url = "https://catppuccin.github.io/discord/dist/catppuccin-${catppuccin.flavor}-${catppuccin.accent}.theme.css";
           hash = sha256:uaYo7x0YHw0dJlzP6loIiQFxCU4HPvAUwiqQnaTZxn4=;
         };
-        square-corners = pkgs.fetchurl {
-          url = https://gist.githubusercontent.com/TheBunnyMan123/6315b2b6db6096ae8485736b4ebbceff/raw/14356b1435db17afcdd7f5d50831b499abc7b4c8/squarecorners.theme.css;
-          hash = sha256:AdiIfmq0Vc6VlmlanvIUnkNlvOjLciwdpZxtAYYXtCQ=;
-        };
+        # square-corners = pkgs.fetchurl {
+        #   url = https://gist.githubusercontent.com/TheBunnyMan123/6315b2b6db6096ae8485736b4ebbceff/raw/14356b1435db17afcdd7f5d50831b499abc7b4c8/squarecorners.theme.css;
+        #   hash = sha256:AdiIfmq0Vc6VlmlanvIUnkNlvOjLciwdpZxtAYYXtCQ=;
+        # };
       };
       plugins = {
         atSomeone.enabled = true;

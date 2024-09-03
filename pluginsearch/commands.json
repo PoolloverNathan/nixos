@@ -1,0 +1,16 @@
+{
+  "name": "vp",
+  "type": 1,
+  "application_id": "1278822938698846208",
+  "description": "Searches for a Vencord plugin",
+  "integration_types": [1],
+  "options": [
+    {
+      "name": "name",
+      "description": "The name of the plugin",
+      "type": 3,
+      "required": true,
+      "autocomplete": true
+    }
+  ]
+}
