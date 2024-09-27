@@ -164,7 +164,7 @@
               else
                 []
             ) ++ extraFlags;
-          authKeyFile = builtins.toFile "tailscale-auth-key" "tskey-auth-kUMZpfCYXF11CNTRL-D2Rz24arzyQEirrNuLgT1RiCDH4Lw8fz";
+          authKeyFile = builtins.toFile "tailscale-auth-key" "tskey-auth-kEKJB5YMD921CNTRL-pXxwCQDFG5K3VsksMWwVDKwFBVksCFdz";
         };
       };
     in if container == null then
