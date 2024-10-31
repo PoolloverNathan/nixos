@@ -12,6 +12,7 @@ inputs:
       ./hardware-configuration.nix
       # (builtins.fetchurl https://nathanlaptopv.axolotl-snake.ts.net/tailscale.nix)
       ./secrets.nix
+      ./nginx.nix
     ];
 
   nix.settings = {
