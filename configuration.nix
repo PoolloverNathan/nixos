@@ -110,6 +110,12 @@ inputs:
       allowedTCPPorts = [2423 2352 31337 6697];
       rejectPackets = true;
     };
+    hosts = {
+      ${pkgs.lib.fileContents inputs.myip} = ["chromebook.ccpsnet.net" "h.pool.net.eu.org"];
+      "0.0.0.0" = ["api.hapara.com" "hl.hapara.com"];
+      "192.168.1.4" = ["home.vscode.local"];
+      "192.168.143.69" = ["roaming.vscode.local"];
+    };
   };
 
   # Set your time zone.
@@ -181,16 +187,14 @@ inputs:
     '';
     jellyfin.enable = true;
     jellyfin.openFirewall = true;
-    # dnsmasq.enable = true;
+    dnsmasq.enable = true;
     dnsmasq.settings = {
-      domain-needed = true;
+      # domain-needed = true;
       server = [
-        "2a07:a8c0::ef:ea54"
-        "2a07:a8c1::ef:ea54"
-        "45.90.28.207"
-        "45.90.30.207"
+        "8.8.8.8"
+        "8.8.4.4"
       ];
-      local = "home";
+      # local = "home";
     };
   };
   security.rtkit.enable = true;

@@ -60,6 +60,7 @@ in {
     # kde-connect
     prismlauncher
     python312Full
+    stgit
     vscodium
     xclip
     xsel;

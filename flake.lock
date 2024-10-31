@@ -615,6 +615,18 @@
         "type": "github"
       }
     },
+    "myip": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-7sgTBEUkgZG7Ex7pkulIkEjk7zH0Ln1g2sTGV3R3VsY=",
+        "type": "file",
+        "url": "https://myip.wtf"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://myip.wtf"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -879,6 +891,18 @@
         "type": "github"
       }
     },
+    "phoneip": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-NlxcUneuSWHXqzeqNGatDi7b/+Pr5F5I9ouO3M2gxWU=",
+        "type": "file",
+        "url": "http://100.69.15.27:2380/api/ip"
+      },
+      "original": {
+        "type": "file",
+        "url": "http://100.69.15.27:2380/api/ip"
+      }
+    },
     "root": {
       "inputs": {
         "bunny": "bunny",
@@ -886,8 +910,10 @@
         "catppuccin-qt5ct": "catppuccin-qt5ct",
         "fokquote": "fokquote",
         "home-manager": "home-manager_2",
+        "myip": "myip",
         "nixpkgs": "nixpkgs_5",
         "nixvim": "nixvim",
+        "phoneip": "phoneip",
         "sadan4": "sadan4"
       }
     },

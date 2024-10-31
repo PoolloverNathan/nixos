@@ -12,6 +12,8 @@
     nixvim.url = github:nix-community/nixvim;
     sadan4.url = github:sadan4/dotfiles;
     bunny.url = github:TheBunnyMan123/nixos-config;
+	myip = { url = https://myip.wtf; flake = false; };
+	phoneip = { url = http://100.69.15.27:2380/api/ip; flake = false; };
   };
 
   outputs = inputs@{ self, nixpkgs, fokquote, home-manager, ... }: rec {
