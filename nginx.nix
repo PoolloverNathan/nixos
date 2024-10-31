@@ -1,4 +1,7 @@
 { ... }: {
+	imports = [
+		./binary-cache.nix
+	];
 	services.nginx = {
 		enable = true;
 		recommendedProxySettings = true;
