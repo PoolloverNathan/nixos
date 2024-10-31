@@ -31,7 +31,7 @@ in {
       };
     }
     {
-      config = lib.mkIf (options?stylix) {
+      config = lib.mkIf options?stylix {
         stylix = {
           enable = lib.mkForce false;
           autoEnable = lib.mkForce false;
