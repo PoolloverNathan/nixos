@@ -30,18 +30,6 @@ in {
         default = {};
       };
     }
-    {
-      config = lib.mkIf options?stylix {
-        stylix = {
-          enable = lib.mkForce false;
-          autoEnable = lib.mkForce false;
-        };
-        assertions = [
-          { assertion = !config.stylix.enable; message = "stylix is enabled"; }
-          { assertion = !config.stylix.autoEnable; message = "stylix is auto-enabled"; }
-        ];
-      };  
-    }
   ];
 } // rec {
   nixpkgs.config.allowUnfree = true;
@@ -169,10 +157,7 @@ in {
   };
   programs = {
     bat.enable = true;
-    eza = {
-      enable = true;
-      icons = true;
-    };
+    eza.enable = true;
     fastfetch.enable = true;
     fish = {
       enable = true;
@@ -246,12 +231,6 @@ in {
           host = "bunny";
           hostname = "nixos-desktop.kamori-ghoul.ts.net";
           port = 2222;
-        };
-        phone = {
-          host = "phone";
-          hostname = "phone-3.axolotl-snake.ts.net";
-          user = "u0_a408";
-          port = 8022;
         };
       };
     };
