@@ -31,6 +31,12 @@
     nixosModules = {
       nathan = mkNathan true;
       nathan-nosudo = mkNathan false;
+      binary-cache = {
+        nix.settings = {
+          extra-substituters = [http://cache.pool.net.eu.org];
+          extra-trusted-public-keys = [cache.nix.pool.net.eu.org:4XHLJdJ1D2yxS2PpV+IXBw9n+cD41V1DdeJ+XWWokKo=];
+        };
+      };
     };
     nixosConfigurations = {
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
@@ -40,6 +46,7 @@
           inputs.catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           nixosModules.nathan
+          nixosModules.binary-cache
 	  # inputs.bunny.nixosModules.bunny-sshworthy
           ({lib, ...}: {
             users.users.bunny.uid = lib.mkForce 26897;
