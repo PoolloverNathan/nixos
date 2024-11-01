@@ -33,7 +33,7 @@
       nathan-nosudo = mkNathan false;
       binary-cache = {
         nix.settings = {
-          extra-substituters = [http://cache.pool.net.eu.org];
+          extra-substituters = [https://cache.pool.net.eu.org];
           extra-trusted-public-keys = [cache.nix.pool.net.eu.org:4XHLJdJ1D2yxS2PpV+IXBw9n+cD41V1DdeJ+XWWokKo=];
         };
       };
