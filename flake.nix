@@ -31,10 +31,10 @@
     nixosModules = {
       nathan = mkNathan true;
       nathan-nosudo = mkNathan false;
-      binary-cache = {
+      binary-cache = { lib, ... }: {
         nix.settings = {
           extra-substituters = [https://cache.pool.net.eu.org];
-          extra-trusted-public-keys = [cache.nix.pool.net.eu.org:4XHLJdJ1D2yxS2PpV+IXBw9n+cD41V1DdeJ+XWWokKo=];
+          extra-trusted-public-keys = [(lib.fileContents ./cache-pub-key.pem)];
         };
       };
     };
