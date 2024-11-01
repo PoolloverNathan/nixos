@@ -13,6 +13,7 @@ inputs:
       # (builtins.fetchurl https://nathanlaptopv.axolotl-snake.ts.net/tailscale.nix)
       ./secrets.nix
       ./nginx.nix
+      ./ci.nix
     ];
 
   nix.settings = {
@@ -279,6 +280,7 @@ inputs:
   };
   users.groups.sand = {};
   users.groups.bunny = {};
+  users.groups.ci = {};
   # {{{ Dedicated !neofetch user for security purposes —PoolloverNathan
   users.groups.neofetch.gid = 337;
   users.users.neofetch = {
