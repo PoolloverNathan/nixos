@@ -187,7 +187,21 @@ in {
       };
     };
     nixvim = {
+      # TODO(PoolloverNathan):
+      # • get vim-surround working again
+      # • add figblk and lit parsers to treesitter
       enable = true;
+      withNodeJs = true;
+      withRuby = true;
+      opts = {
+        aw = true;
+        et = false;
+        ex = true;
+        fdm = "marker";
+        sw = 4;
+        ts = 4;
+        udf = true;
+      };
       colorschemes.catppuccin = {
         enable = true;
         settings = {
@@ -211,6 +225,7 @@ in {
       plugins = {
         gitsigns.enable = true;
         lightline.enable = true;
+        lsp.enable = true;
         treesitter = {
           enable = true;
           settings = {
@@ -219,6 +234,15 @@ in {
             incremental_selection.enable = true;
           };
         };
+        treesitter-textobjects.enable = true;
+        undotree.enable = true;
+      };
+      performance.byteCompileLua = {
+        enable = true;
+        configs = true;
+        initLua = true;
+        nvimRuntime = true;
+        plugins = true;
       };
     };
     starship = {
