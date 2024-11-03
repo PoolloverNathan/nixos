@@ -257,6 +257,16 @@ inputs:
       extraGroups = ["wheel"];
       hashedPassword = "$y$j9T$rDEo4MR.C4ZzaBPXkpWEb.$FpdzrLaf4E8R.IhyXsdjSYQ6WObpHnQKO50a0mBpKb6";
     };
+    blahai = {
+      uid = 10667;
+      isNormalUser = true;
+      group = "users";
+    };
+    zoot = {
+      uid = 10699;
+      isNormalUser = true;
+      group = "users";
+    };
     nemmy = {
       uid = 1253;
       isNormalUser = true;
@@ -352,5 +362,7 @@ inputs:
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "23.11"; # Did you read the comment?
 
+  home-manager.users.blahai.home.stateVersion = "23.11";
+  home-manager.users.blahai.home.file.".ssh/authorized_keys".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILPbmiNqoyeKXk/VopFm2cFfEnV4cKCFBhbhyYB69Fuu";
 }
 
