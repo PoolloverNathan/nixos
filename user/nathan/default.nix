@@ -85,9 +85,9 @@ in {
           alias tput="tty -s && tput"
           case "$op" in
             rb|rebuild|sw|switch)
-              nixos-rebuild switch "$@";;
+              nixos-rebuild switch --use-remote-sudo "$@";;
             t|test)
-              nixos-rebuild test "$@";;
+              nixos-rebuild test --use-remote-sudo "$@";;
             gen)
               nixos-generate-config "$@";;
             b|build|dry-build)
