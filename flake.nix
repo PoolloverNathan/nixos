@@ -58,6 +58,7 @@
 	    extraFlags = ["--no-accept-dns"];
           })
         ];
+        specialArgs.inputs = inputs;
       };
     };
     defineUser = {
