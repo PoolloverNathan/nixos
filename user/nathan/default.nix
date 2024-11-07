@@ -264,6 +264,12 @@ in {
           hostname = "nixos-desktop.kamori-ghoul.ts.net";
           port = 2222;
         };
+        phone = {
+          host = "phone";
+          hostname = "100.69.15.27";
+          port = 8022;
+          user = "u0_a408";
+        };
       };
     };
     thefuck = {
