@@ -198,6 +198,18 @@ inputs:
     };
   };
   security.rtkit.enable = true;
+  specialisation = {
+    wayland.configuration = {
+      services = {
+        xserver.enable = lib.mkForce false;
+        hypridle.enable = true;
+      };
+      programs = {
+        hyprland.enable = true;
+        hyprlock.enable = true;
+      };
+    };
+  };
 
   # security.pam.oath.enable = true;
   environment.etc."users.oath".text = ''
