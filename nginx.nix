@@ -11,7 +11,10 @@
       "figura.pool.net.eu.org" = {
         addSSL = true;
         enableACME = true;
-        locations."/".proxyPass = "http://localhost:6665";
+        locations."/" = {
+          proxyPass = "http://localhost:6665";
+          proxyWebsockets = true;
+        };
       };
       "n.pool.net.eu.org" = {
         addSSL = true;
