@@ -120,6 +120,18 @@
               type = with lib.types; listOf singleLineStr;
               default = [];
             };
+            options = lib.mkOption {
+              description = ''
+                The outer system's options. You may not edit this!
+              '';
+              type = lib.types.anything;
+            };
+            config = lib.mkOption {
+              description = ''
+                The outer system's config. You may not edit this!
+              '';
+              type = lib.types.anything;
+            };
             services = lib.mkOption {
               description = ''
                 Services to run on a system level. This is passed (with a prefix applied) to [systemd.services] and expects the same content.
@@ -132,12 +144,16 @@
             extraHomeConfig
             (if userConfigFile != null then import userConfigFile (args // extraConfigArgs) else {})
           ];
-          config.assertions = [
-            {
-              assertion = systemConfig.sshKeys != [] || systemConfig.hashedPassword != null;
-              message = "User ${name} [${uid}] has no way to log in";
-            }
-          ];
+          config = {
+            system.config = config;
+            system.options = options;
+            assertions = [
+              {
+                assertion = systemConfig.sshKeys != [] || systemConfig.hashedPassword != null;
+                message = "User ${name} [${uid}] has no way to log in";
+              }
+            ];
+          };
         };
       };
     };
