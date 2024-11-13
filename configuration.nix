@@ -104,13 +104,14 @@ inputs:
       networks = import ./networks.nix;
     };
     # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-    nameservers = ["2a07:a8c0::ef:ea54" "2a07:a8c1::ef:ea54" "8.8.8.8"];
+    nameservers = ["8.8.8.8" "8.8.4.4"];
     nftables.enable = true;
     firewall = {
       enable = false;
       allowedTCPPorts = [2423 2352 31337 6697];
       rejectPackets = true;
     };
+    # TODO(PoolloverNathan): add adlists
     hosts = {
       "0.0.0.0" = ["api.hapara.com" "hl.hapara.com" "chromebook.ccpsnet.net" "h.pool.net.eu.org"];
       "192.168.1.4" = ["home.vscode.local"];
