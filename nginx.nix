@@ -12,6 +12,11 @@
         enableACME = true;
         locations."/".proxyPass = "http://localhost:6665";
       };
+      "n.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = "http://localhost:2252";
+      };
     };
   };
   security.acme = {
