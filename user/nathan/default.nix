@@ -243,6 +243,7 @@ in {
         };
         treesitter-textobjects.enable = true;
         undotree.enable = true;
+        wakatime.enable = true;
       };
       performance.byteCompileLua = {
         enable = true;
