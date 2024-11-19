@@ -47,7 +47,6 @@
           inputs.catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           nixosModules.nathan
-          nixosModules.binary-cache
 	  # inputs.bunny.nixosModules.bunny-sshworthy
           ({lib, ...}: {
             users.users.bunny.uid = lib.mkForce 26897;
