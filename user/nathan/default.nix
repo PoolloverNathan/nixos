@@ -23,7 +23,6 @@ in {
   imports = [
     nixvim.homeManagerModules.nixvim
     catppuccin.homeManagerModules.catppuccin
-    ./vencord.nix
     {
       options.repl = lib.mkOption {
         type = lib.types.attrs;

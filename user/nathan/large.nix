@@ -16,15 +16,8 @@
   ...
 }: {
   imports = [
-    nixvim.homeManagerModules.nixvim
-    catppuccin.homeManagerModules.catppuccin
+    ./.
     ./vencord.nix
-    {
-      options.repl = lib.mkOption {
-        type = lib.types.attrs;
-        default = {};
-      };
-    }
   ];
 } // rec {
   home.packages = with pkgs; [

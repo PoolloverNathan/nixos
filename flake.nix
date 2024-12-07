@@ -13,12 +13,11 @@
     sadan4.url = github:sadan4/dotfiles;
     bunny.url = github:TheBunnyMan123/nixos-config;
 	myip = { url = https://myip.wtf; flake = false; };
-	phoneip = { url = http://100.69.15.27:2380/api/ip; flake = false; };
   };
 
   outputs = inputs@{ self, nixpkgs, fokquote, home-manager, ... }: rec {
     # formatter = builtins.mapAttrs (system: pkgs: pkgs.nixfmt-rfc-style)
-    mkNathan = { uid = 1471, large = false, canSudo }: defineUser {
+    mkNathan = { uid ? 1471, large ? false, canSudo }: defineUser {
       name = "nathan";
       inherit uid canSudo;
       userConfigFile = if large then user/nathan/large.nix else user/nathan;
@@ -30,8 +29,8 @@
       ];
     };
     nixosModules = {
-      nathan = lib.warn "Using the nixosModules export of my user is deprecated. Please pass arguments to mkNathan directly." mkNathan true;
-      nathan-nosudo = lib.warn "Using the nixosModules export of my user is deprecated. Please pass arguments to mkNathan directly." mkNathan false;
+      nathan = mkNathan true;
+      nathan-nosudo = mkNathan false;
       binary-cache = { lib, ... }: {
         nix.settings = {
           extra-substituters = [https://cache.pool.net.eu.org];
