@@ -274,6 +274,13 @@ inputs:
       extraGroups = ["wheel"];
       hashedPassword = "$y$j9T$rDEo4MR.C4ZzaBPXkpWEb.$FpdzrLaf4E8R.IhyXsdjSYQ6WObpHnQKO50a0mBpKb6";
     };
+    proto = {
+      uid = 1936;
+      isNormalUser = true;
+      createHome = true;
+      group = "users";
+      hashedPassword = "$y$j9T$4XOTYGGwMYkfwfse/QBhS1$GzPbhXZ4oKZbHQ2sn7iVDUN2tEAUx03HdxAfOx/Fey/";
+    };
     blahai = {
       uid = 10667;
       isNormalUser = true;
@@ -292,6 +299,11 @@ inputs:
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKMh9MzUXUv/qhUUbUE8KMykreeGbwSDQk/YHPcTi0Wc panda@pandaptable.moe"
       ];
+    };
+    null = {
+      uid = 1984;
+      isNormalUser = true;
+      group = "users";
     };
   };
   users.groups.sand = {};
