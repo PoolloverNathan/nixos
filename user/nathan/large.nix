@@ -33,7 +33,6 @@
     pkgs.jetbrains.idea-community
   ];
   programs = {
-
     librewolf = {
       enable = true;
       settings = {
@@ -242,3 +241,4 @@
       ];
     };
   };
+}
