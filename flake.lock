@@ -805,7 +805,7 @@
     "myip": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-7sgTBEUkgZG7Ex7pkulIkEjk7zH0Ln1g2sTGV3R3VsY=",
+        "narHash": "sha256-dz0gnnX3rmqPZZkBhEp5pl7xHjRqC1QyHk3A+WA6XFo=",
         "type": "file",
         "url": "https://myip.wtf"
       },
@@ -1195,6 +1195,7 @@
         "catppuccin-qt5ct": "catppuccin-qt5ct",
         "fokquote": "fokquote",
         "home-manager": "home-manager_2",
+        "myip": "myip",
         "nixpkgs": "nixpkgs_5",
         "nixvim": "nixvim",
         "phoneip": "phoneip",
