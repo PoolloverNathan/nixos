@@ -111,8 +111,7 @@ inputs:
       rejectPackets = true;
     };
     hosts = {
-      ${pkgs.lib.fileContents inputs.myip} = ["chromebook.ccpsnet.net" "h.pool.net.eu.org"];
-      "0.0.0.0" = ["api.hapara.com" "hl.hapara.com"];
+      "0.0.0.0" = ["api.hapara.com" "hl.hapara.com" "chromebook.ccpsnet.net" "h.pool.net.eu.org"];
       "192.168.1.4" = ["home.vscode.local"];
       "192.168.143.69" = ["roaming.vscode.local"];
     };
