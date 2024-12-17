@@ -805,7 +805,7 @@
     "myip": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-dz0gnnX3rmqPZZkBhEp5pl7xHjRqC1QyHk3A+WA6XFo=",
+        "narHash": "sha256-Eh+zHLNp0OS8W71pyEN8uOzLRU7Xi/LqQntffa28T08=",
         "type": "file",
         "url": "https://myip.wtf"
       },
