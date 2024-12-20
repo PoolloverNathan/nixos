@@ -2,6 +2,7 @@
   imports = [
     ./binary-cache.nix
     ./webdav.nix
+    ./outline.nix
   ];
   services.nginx = {
     enable = true;
