@@ -3,7 +3,14 @@
     ./binary-cache.nix
     ./webdav.nix
     ./outline.nix
+    ./upnp.nix
   ];
+  networking.upnp.nginx = {
+    description = "Nginx port mapping";
+    ports = [80 443];
+    ignore = true;
+    bindsTo = "nginx.service";
+  };
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;

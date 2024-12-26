@@ -25,14 +25,8 @@
       userConfigFile = if large then user/nathan/large.nix else user/nathan;
       extraUserConfig.linger = large;
       extraConfigArgs = inputs;
-      imports = [
-        ({ pkgs, ... }: {
-        })
-      ];
     };
     nixosModules = {
-      nathan = mkNathan true;
-      nathan-nosudo = mkNathan false;
       binary-cache = { lib, ... }: {
         nix.settings = {
           extra-substituters = [https://cache.pool.net.eu.org];
@@ -44,18 +38,20 @@
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         modules = [
-          (import ./configuration.nix inputs)
-          inputs.catppuccin.nixosModules.catppuccin
-          home-manager.nixosModules.home-manager
-          (mkNathan { large = true; canSudo = true; })
-	  # inputs.bunny.nixosModules.bunny-sshworthy
+          (import hosts/nathanlaptopv inputs)
+          ./common.nix
           ({lib, ...}: {
             users.users.bunny.uid = lib.mkForce 26897;
           })
-          (mkTailnet {
-            ssh = false;
-	    extraFlags = ["--no-accept-dns"];
-          })
+        ];
+        specialArgs.inputs = inputs;
+      };
+      nathanpc = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        modules = [
+          (import hosts/nathanpc inputs)
+          ./common.nix
+          self.nixosModules.binary-cache
         ];
         specialArgs.inputs = inputs;
       };
