@@ -18,12 +18,11 @@
 
   outputs = inputs@{ self, nixpkgs, fokquote, home-manager, ... }: rec {
     # formatter = builtins.mapAttrs (system: pkgs: pkgs.nixfmt-rfc-style)
-    mkNathan = canSudo: defineUser {
-      uid = 1471;
+    mkNathan = { uid ? 1471, large ? false, canSudo }: defineUser {
       name = "nathan";
-      inherit canSudo;
-      userConfigFile = user/nathan;
-      extraUserConfig.linger = true;
+      inherit uid canSudo;
+      userConfigFile = if large then user/nathan/large.nix else user/nathan;
+      extraUserConfig.linger = large;
       extraConfigArgs = inputs;
       imports = [
         ({ pkgs, ... }: {
@@ -47,7 +46,7 @@
           (import ./configuration.nix inputs)
           inputs.catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
-          nixosModules.nathan
+          (mkNathan { large = true; canSudo = true; })
 	  # inputs.bunny.nixosModules.bunny-sshworthy
           ({lib, ...}: {
             users.users.bunny.uid = lib.mkForce 26897;
