@@ -5,6 +5,7 @@
     catppuccin.url = github:catppuccin/nix;
     catppuccin-qt5ct.url = github:catppuccin/qt5ct;
     catppuccin-qt5ct.flake = false;
+    disko.url = github:nix-community/disko;
     fokquote.url = github:fokohetman/fok-quote;
     home-manager.url = github:nix-community/home-manager;
     # nethack.url = git+ssh://nathanlaptopv/home/nathan/stuff/nethack;
