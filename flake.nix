@@ -2,6 +2,7 @@
   description = "NixOS configuration";
 
   inputs = {
+    agenix.url = github:ryantm/agenix;
     catppuccin.url = github:catppuccin/nix;
     catppuccin-qt5ct.url = github:catppuccin/qt5ct;
     catppuccin-qt5ct.flake = false;
@@ -185,7 +186,6 @@
               else
                 []
             ) ++ extraFlags;
-          authKeyFile = builtins.toFile "tailscale-auth-key" "tskey-auth-kUMZpfCYXF11CNTRL-D2Rz24arzyQEirrNuLgT1RiCDH4Lw8fz";
         };
       };
     in if container == null then

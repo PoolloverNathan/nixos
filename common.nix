@@ -2,6 +2,7 @@
   imports = [
     (inputs.self.mkNathan { large = false; canSudo = true; })
     inputs.home-manager.nixosModules.home-manager
+    inputs.agenix.nixosModules.age
     inputs.catppuccin.nixosModules.catppuccin
     ./secrets.nix
     (inputs.self.mkTailnet {
@@ -41,6 +42,10 @@
     wireless = {
       enable = true;
       networks = import ./networks.nix;
+    };
+    firewall = {
+      enable = lib.mkDefault true;
+      allowedTCPPorts = [22];
     };
   };
 
