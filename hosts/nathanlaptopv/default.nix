@@ -21,6 +21,12 @@ inputs:
     powerOnBoot = true;
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
+    config.common.default = ["hyprland"];
+  };
+
   # Use the systemd-boot EFI boot loader.
   # boot.loader.systemd-boot.enable = true;
   systemd.services.reload-ssh-keys = {

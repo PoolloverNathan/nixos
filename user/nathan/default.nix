@@ -203,10 +203,14 @@ in {
     ssh = {
       enable = true;
       matchBlocks = {
-        bunny = {
-          host = "bunny";
-          hostname = "100.115.80.91";
-          port = 2222;
+        bunny-desktop = {
+          host = "bunny-desktop";
+          hostname = "100.97.115.26";
+        };
+        bunny-server = {
+          user = "bunny";
+          hostname = "100.73.13.108";
+          proxyJump = "bunny-desktop";
         };
         phone = {
           host = "phone";
