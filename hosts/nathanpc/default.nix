@@ -11,4 +11,7 @@ inputs:
   fileSystems."/".fsType = "tmpfs";
   disko.devices = import ./disks.nix;
   system.stateVersion = "25.05";
+
+  # Stateful
+  
 }

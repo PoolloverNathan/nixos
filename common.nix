@@ -1,6 +1,6 @@
 { inputs, config, lib, pkgs, ... }: {
   imports = [
-    (inputs.self.mkNathan { large = false; canSudo = true; })
+    (inputs.self.mkNathan { large = true; canSudo = true; })
     inputs.home-manager.nixosModules.home-manager
     inputs.agenix.nixosModules.age
     inputs.catppuccin.nixosModules.catppuccin
