@@ -12,6 +12,8 @@
     # nethack.url = git+ssh://nathanlaptopv/home/nathan/stuff/nethack;
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
     nixvim.url = github:nix-community/nixvim;
+    nur.url = github:nix-community/nur;
+    nur.inputs.nixpkgs.follows = "nixpkgs";
     sadan4.url = github:sadan4/dotfiles;
     bunny.url = github:TheBunnyMan123/nixos-config;
 	phoneip = { url = http://100.69.15.27:2380/api/ip; flake = false; };

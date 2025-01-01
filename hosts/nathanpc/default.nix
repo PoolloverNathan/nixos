@@ -8,6 +8,7 @@ inputs:
   # Temporary until Hyprland work
   services.xserver.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
+  programs.hyprland.enable = true;
   fileSystems."/".fsType = "tmpfs";
   disko.devices = import ./disks.nix;
   system.stateVersion = "25.05";

@@ -12,12 +12,14 @@ args@{
   # nethack,
   nixpkgs,
   nixvim,
+  nur,
   sadan4,
   ...
 }: {
   imports = [
     (import ./. args)
     ./vencord.nix
+    (import ./firefox.nix nur)
   ];
 } // rec {
   home.packages = with pkgs; [
@@ -33,13 +35,6 @@ args@{
     pkgs.jetbrains.idea-community
   ];
   programs = {
-    librewolf = {
-      enable = true;
-      settings = {
-        "webgl.disabled" = false;
-        "privacy.resistFingerprinting" = false;
-      };
-    };
     thefuck = {
       enable = true;
       enableBashIntegration = true;
