@@ -79,4 +79,6 @@
       };
     };
   };
+
+  home-manager.backupFileExtension = "~PRE-HOME-MANAGER~";
 }
