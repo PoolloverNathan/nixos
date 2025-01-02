@@ -127,6 +127,14 @@ inputs:
     };
   };
 
+  home-manager.users.nathan = {
+    wayland.windowManager.hyprland.extraConfig = ''
+      monitor = ,preferred,auto,auto
+      monitor = eDP-1,disable
+      monitor = HDMI-A-1,1280x1024@60hz,0x0,1
+    '';
+  };
+
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
