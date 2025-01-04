@@ -59,6 +59,8 @@
     useXkbConfig = true; # use xkb.options in tty.
   };
 
+  fonts.packages = [pkgs.nerdfonts];
+
   services = {
     openssh.enable = true;
     openssh.settings = {
