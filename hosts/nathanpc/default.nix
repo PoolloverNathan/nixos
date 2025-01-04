@@ -23,8 +23,8 @@ inputs:
       mkSymlink =
         name:
         {
-          "/etc/ssh/ssh_host_${name}_key".L.argument = "/var/ssh/host_${name}";
-          "/etc/ssh/ssh_host_${name}_key.pub".L.argument = "/var/ssh/k/host_${name}";
+          "/etc/ssh/ssh_host_${name}_key".L.argument = "/var/ssh/k/host_${name}";
+          "/etc/ssh/ssh_host_${name}_key.pub".L.argument = "/var/ssh/host_${name}";
         };
     in
       {
