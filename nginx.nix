@@ -29,6 +29,11 @@
         enableACME = true;
         locations."/".proxyPass = "http://localhost:2252";
       };
+      "fossil.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = "http://localhost:8587";
+      };
     };
   };
   security.acme = {
