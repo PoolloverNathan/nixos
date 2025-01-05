@@ -45,7 +45,7 @@
     };
     firewall = {
       enable = lib.mkDefault true;
-      allowedTCPPorts = [22];
+      allowedTCPPorts = [22 2377 7946 4789];
     };
   };
 
@@ -66,6 +66,9 @@
     openssh.settings = {
       X11Forwarding = true;
     };
+  };
+  virtualisation = {
+    docker.enable = true;
   };
   hardware.pulseaudio.enable = false;
   programs = {
