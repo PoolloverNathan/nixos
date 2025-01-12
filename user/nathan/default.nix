@@ -33,7 +33,7 @@ in {
 } // rec {
   nixpkgs.config.allowUnfree = true;
   system.shell = pkgs.fish + /bin/fish;
-  system.hashedPassword = "$y$j9T$lfDMkzctZ7jVUA.rK6U/3/$stLjTnRqME75oum.040Ya7tKAPsnIJ.gAZYQk57vNp2";
+  system.hashedPassword = "$y$j9T$Mxxlw5CI49VH14j/u3VT40$QRJGN21659v/lZnlTsu9fi9s8MSCIhxsLGa7jaWdp.6";
   system.userDescription = "PoolloverNathan";
   home.sessionVariables = {
     SHELL = "fish";
