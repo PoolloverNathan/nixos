@@ -15,9 +15,15 @@
     enable = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
+    upstreams = {
+      fossil.servers."localhost:8587" = {
+        fail_timeout = "5m";
+        max_fails = 6;
+      };
+    };
     virtualHosts = {
       "figura.pool.net.eu.org" = {
-        addSSL = true;
+        forceSSL = true;
         enableACME = true;
         locations."/" = {
           proxyPass = "http://localhost:6665";
@@ -25,21 +31,40 @@
         };
       };
       "n.pool.net.eu.org" = {
-        addSSL = true;
+        forceSSL = true;
         enableACME = true;
         locations."/".proxyPass = "http://localhost:2252";
       };
       "fossil.pool.net.eu.org" = {
-        addSSL = true;
+        forceSSL = true;
         enableACME = true;
-        locations."/".proxyPass = "http://localhost:8587";
+        locations."/".proxyPass = "http://fossil";
+        extraConfig = ''
+          proxy_read_timeout 1h;
+        '';
+      };
+      "docker.pool.net.eu.org" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = "http://100.124.64.122:5000";
+        extraConfig = ''
+          client_max_body_size 8G;
+        '';
+      };
+      "forms.pool.net.eu.org" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = "http://100.124.64.122:9771";
+        extraConfig = ''
+          client_max_body_size 8G;
+        '';
       };
       "code.pool.net.eu.org" = {
-        addSSL = true;
-        onlySSL = true;
+        forceSSL = true;
         enableACME = true;
         locations."/" = {
           proxyPass = http://localhost:2352;
+          proxyWebsockets = true;
           basicAuthFile = ./code.htpasswd;
         };
       };
