@@ -53,7 +53,7 @@ inputs:
     };
     # TODO(PoolloverNathan): add adlists
     hosts = {
-      ${pkgs.lib.fileContents inputs.myip} = ["chromebook.ccpsnet.net" "h.pool.net.eu.org"];
+      "100.7.89.95" = ["chromebook.ccpsnet.net" "h.pool.net.eu.org"];
       "0.0.0.0" = ["api.hapara.com" "hl.hapara.com"];
       "192.168.1.4" = ["home.vscode.local"];
       "192.168.143.69" = ["roaming.vscode.local"];

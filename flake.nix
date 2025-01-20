@@ -16,8 +16,6 @@
     nur.inputs.nixpkgs.follows = "nixpkgs";
     sadan4.url = github:sadan4/dotfiles;
     bunny.url = github:TheBunnyMan123/nixos-config;
-	phoneip = { url = http://100.69.15.27:2380/api/ip; flake = false; };
-	myip = { url = https://myip.wtf; flake = false; };
   };
 
   outputs = inputs@{ self, nixpkgs, fokquote, home-manager, ... }: rec {
