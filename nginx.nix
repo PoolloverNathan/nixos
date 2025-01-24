@@ -23,7 +23,7 @@
     };
     virtualHosts = {
       "figura.pool.net.eu.org" = {
-        forceSSL = true;
+        addSSL = true;
         enableACME = true;
         locations."/" = {
           proxyPass = "http://localhost:6665";
@@ -31,12 +31,12 @@
         };
       };
       "n.pool.net.eu.org" = {
-        forceSSL = true;
+        addSSL = true;
         enableACME = true;
         locations."/".proxyPass = "http://localhost:2252";
       };
       "fossil.pool.net.eu.org" = {
-        forceSSL = true;
+        addSSL = true;
         enableACME = true;
         locations."/".proxyPass = "http://fossil";
         extraConfig = ''
@@ -44,7 +44,7 @@
         '';
       };
       "docker.pool.net.eu.org" = {
-        forceSSL = true;
+        addSSL = true;
         enableACME = true;
         locations."/".proxyPass = "http://100.124.64.122:5000";
         extraConfig = ''
@@ -52,7 +52,7 @@
         '';
       };
       "forms.pool.net.eu.org" = {
-        forceSSL = true;
+        addSSL = true;
         enableACME = true;
         locations."/".proxyPass = "http://100.124.64.122:9771";
         extraConfig = ''
@@ -60,7 +60,7 @@
         '';
       };
       "code.pool.net.eu.org" = {
-        forceSSL = true;
+        addSSL = true;
         enableACME = true;
         locations."/" = {
           proxyPass = http://localhost:2352;
