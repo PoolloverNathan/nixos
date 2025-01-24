@@ -59,7 +59,7 @@
     useXkbConfig = true; # use xkb.options in tty.
   };
 
-  fonts.packages = [pkgs.nerdfonts];
+  fonts.packages = builtins.filter (lib.attrsets.isDerivation) (builtins.attrValues pkgs.nerd-fonts);
 
   services = {
     openssh.enable = true;
