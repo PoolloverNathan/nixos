@@ -62,6 +62,7 @@
   fonts.packages = builtins.filter (lib.attrsets.isDerivation) (builtins.attrValues pkgs.nerd-fonts);
 
   services = {
+    pulseaudio.enable = false;
     openssh.enable = true;
     openssh.settings = {
       X11Forwarding = true;
@@ -70,7 +71,6 @@
   virtualisation = {
     docker.enable = true;
   };
-  hardware.pulseaudio.enable = false;
   programs = {
     nix-ld = {
       enable = true;

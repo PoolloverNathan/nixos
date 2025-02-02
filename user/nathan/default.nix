@@ -49,8 +49,10 @@ in {
     inherit (pkgs)
     asciinema
     bat
+    cmus
     ed
     eza
+    fossil
     # kde-connect
     nushell
     python312Full
