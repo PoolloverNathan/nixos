@@ -54,7 +54,7 @@ inputs:
     # TODO(PoolloverNathan): add adlists
     hosts = {
       "70.16.249.212" = ["chromebook.ccpsnet.net" "h.pool.net.eu.org"];
-      "0.0.0.0" = ["api.hapara.com" "hl.hapara.com"];
+      #"0.0.0.0" = ["api.hapara.com" "hl.hapara.com"];
       "192.168.1.4" = ["home.vscode.local"];
       "192.168.143.69" = ["roaming.vscode.local"];
     };
