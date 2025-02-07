@@ -216,6 +216,16 @@ inputs:
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKMh9MzUXUv/qhUUbUE8KMykreeGbwSDQk/YHPcTi0Wc panda@pandaptable.moe"
       ];
     };
+    marley = {
+      uid = 5812;
+      isNormalUser = true;
+      group = "users";
+      extraGroups = ["wheel"];
+      hashedPassword = "$y$j9T$4x9YDrkENEijFKAhbHItJ0$SXqhFvxY0mjuXGilTd0Cn5dCJYQMVOgN07E.zi94fe5";
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILqKSVKd79mV0yXHI7ZhdG8OsM/6NocyeNGiH7WTLlMi marley@maakuarch"
+      ];
+    };
     null = {
       uid = 1984;
       isNormalUser = true;
