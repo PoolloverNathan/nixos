@@ -69,7 +69,10 @@
     };
   };
   virtualisation = {
-    docker.enable = true;
+    docker = {
+      enable = true;
+      liveRestore = false; # incompatible with swarm
+    };
   };
   programs = {
     nix-ld = {
