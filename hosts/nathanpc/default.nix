@@ -5,10 +5,15 @@ inputs:
     inputs.disko.nixosModules.disko
   ];
   networking.hostName = "nathanpc";
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
   # Temporary until Hyprland work
   #services.xserver.enable = true;
   #services.xserver.desktopManager.plasma5.enable = true;
   programs.hyprland.enable = true;
+  programs.steam.enable = true;
   fileSystems."/".fsType = "tmpfs";
   disko.devices = import ./disks.nix;
   system.stateVersion = "25.05";
