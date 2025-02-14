@@ -53,6 +53,7 @@
         locations."/".proxyPass = "http://fossil";
         extraConfig = ''
           proxy_read_timeout 1h;
+          client_max_body_size 8G;
         '';
       };
       "ckout.pool.net.eu.org" = {
