@@ -140,15 +140,15 @@
         "systems": "systems_7"
       },
       "locked": {
-        "lastModified": 1738467860,
-        "narHash": "sha256-in/s5w0xe7tGojf1Z1+SQj1vTHLSDQwLuNccZQdOGYE=",
-        "owner": "thebunnyman123",
+        "lastModified": 1738889619,
+        "narHash": "sha256-LYHrTE2RnRdsrf+eewNDOV85l7+NfnKP89YnYx/Je5g=",
+        "owner": "TheBunnyMan123",
         "repo": "nixos-config",
-        "rev": "c1c34ddc65f2af71773a2fb0a782194058d6f7ec",
+        "rev": "a9c96fbfdd94ba18ef88f46ed117dddc141763ad",
         "type": "github"
       },
       "original": {
-        "owner": "thebunnyman123",
+        "owner": "TheBunnyMan123",
         "repo": "nixos-config",
         "type": "github"
       }
