@@ -38,6 +38,10 @@
     };
   };
 
+  environment.systemPackages = [
+    pkgs.ecryptfs
+  ];
+
   networking = {
     wireless = {
       enable = true;
@@ -72,6 +76,23 @@
     docker = {
       enable = true;
       liveRestore = false; # incompatible with swarm
+    };
+  };
+  users.groups.docker = {
+    members = ["nathan"];
+  };
+  users.users = {
+    voxel = {
+      hashedPassword = "$y$j9T$rs5rZ4Hbbo2xJvdAsIqEu0$qpdybpvf2l5u7qro2ND77D4v6Zbb062JcndqsCqGFG3";
+      isNormalUser = true;
+      group = "users";
+      extraGroups = ["docker"];
+    };
+    momzilla = {
+      uid = 1365;
+      isNormalUser = true;
+      createHome = true;
+      group = "users";
     };
   };
   programs = {

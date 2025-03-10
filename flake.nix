@@ -35,6 +35,12 @@
         };
       };
     };
+    packages = nixpkgs.lib.mapAttrs (system: pkgs: {
+      default = pkgs.linkFarm "systems" [
+        { name = "nathanlaptopv"; path = nixosConfigurations.nathanlaptopv.config.system.build.toplevel; }
+        { name = "nathanpc"; path = nixosConfigurations.nathanpc.config.system.build.toplevel; }
+      ];
+    }) nixpkgs.legacyPackages;
     nixosConfigurations = {
       nathanlaptopv = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
@@ -193,8 +199,5 @@
     else {
       containers.${container} = config;
     };
-    packages = builtins.foldl' nixpkgs.lib.recursiveUpdate {} (builtins.map (att: {
-      ${nixosConfigurations.${att}.pkgs.system}.${att} = nixosConfigurations.${att}.config.system.build;
-    }) (builtins.attrNames nixosConfigurations));
   };
 }

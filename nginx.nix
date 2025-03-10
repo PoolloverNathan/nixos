@@ -106,6 +106,34 @@
           basicAuthFile = ./code.htpasswd;
         };
       };
+      "dolist.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = http://100.124.64.122:7368;
+          proxyWebsockets = true;
+        };
+      };
+      "eizel.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = http://100.124.64.122:1420;
+          proxyWebsockets = true;
+          extraConfig = ''
+            if ($http_user_agent ~ Fossil) {
+              rewrite .+ https://fossil.pool.net.eu.org/eazs;
+            }
+          '';
+        };
+      };
+      "poolside.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = http://127.0.0.1:9709;
+        };
+      };
     };
   };
   security.acme = {
