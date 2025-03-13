@@ -10,8 +10,28 @@ inputs:
     powerOnBoot = true;
   };
   # Temporary until Hyprland work
-  #services.xserver.enable = true;
-  #services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver = {
+    enable = false;
+    #displayManager.sddm.enable = true;
+    #desktopManager.plasma5.enable = true;
+    displayManager.lightdm = {
+      enable = lib.mkForce false;
+      #greeters.gtk.enable = false;
+      #greeters.slick.enable = true;
+    };
+  };
+  #services.displayManager.sddm = {
+  #enable = true;
+  #wayland.enable = true;
+  #settings = {
+  #Users = {
+  #MinimumUid = 1000;
+  #MaximumUid = 65535;
+  #HideUsers = lib.concatStringsSep "," (lib.subtractLists ["nathan" "grace"] (builtins.attrNames config.users.users));
+  #};
+  #};
+  #};
+  services.desktopManager.plasma6.enable = true;
   programs.hyprland.enable = true;
   programs.steam.enable = true;
   fileSystems."/".fsType = "tmpfs";

@@ -34,7 +34,7 @@ in {
   nixpkgs.config.allowUnfree = true;
   system.shell = pkgs.fish + /bin/fish;
   system.hashedPassword = "$y$j9T$Mxxlw5CI49VH14j/u3VT40$QRJGN21659v/lZnlTsu9fi9s8MSCIhxsLGa7jaWdp.6";
-  system.userDescription = "PoolloverNathan";
+  #system.userDescription = "PoolloverNathan";
   home.sessionVariables = {
     SHELL = "fish";
     EDITOR = "nvim";

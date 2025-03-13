@@ -94,6 +94,13 @@
       createHome = true;
       group = "users";
     };
+    grace = {
+      uid = 1500;
+      isNormalUser = true;
+      createHome = true;
+      group = "users";
+      hashedPassword = "$y$j9T$K8M1g/BDdjUkkdjwGjwN80$RURlskVc3WEbqqMmow2cRKr492qnnRPxBXv64QOuo17";
+    };
   };
   programs = {
     nix-ld = {

@@ -114,19 +114,13 @@ inputs:
       ];
       # local = "home";
     };
+    hypridle.enable = true;
   };
   security.rtkit.enable = true;
-  specialisation = {
-    wayland.configuration = {
-      services = {
-        xserver.enable = lib.mkForce false;
-        hypridle.enable = true;
-      };
-      programs = {
-        hyprland.enable = true;
-        hyprlock.enable = true;
-      };
-    };
+  programs = {
+    hyprland.enable = true;
+    steam.enable = true;
+    hyprlock.enable = true;
   };
 
   home-manager.users.nathan = {
@@ -271,7 +265,6 @@ inputs:
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-  programs.steam.enable = true;
 
   # {{{ nrb = sudo nixos-rebuild
   # }}} nrb = sudo nixos-rebuild
