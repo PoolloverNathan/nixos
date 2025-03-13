@@ -177,6 +177,13 @@ inputs:
       uid = 1005;
       isNormalUser = true;
     };
+    win = {
+      uid = 26898;
+      isSystemUser = true;
+      group = "nogroup";
+      hashedPassword = "$y$j9T$w4v8ARWrFjmQ9iDRDWsKN1$8xb16K.8qZIZr.5AMWwKOwvgHK9rruBAk7Dm4PQN1o8";
+      shell = pkgs.bash;
+    };
     kai = {
       uid = 1022;
       isNormalUser = true;

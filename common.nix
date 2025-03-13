@@ -41,6 +41,14 @@
   environment.systemPackages = [
     pkgs.ecryptfs
   ];
+  security.wrappers = {
+    "mount.ecryptfs_private" = {
+      owner = "root";
+      group = "root";
+      setuid = true;
+      source = "${pkgs.ecryptfs}/bin/mount.ecryptfs_private";
+    };
+  };
 
   networking = {
     wireless = {
@@ -83,6 +91,7 @@
   };
   users.users = {
     voxel = {
+      uid = 1069;
       hashedPassword = "$y$j9T$rs5rZ4Hbbo2xJvdAsIqEu0$qpdybpvf2l5u7qro2ND77D4v6Zbb062JcndqsCqGFG3";
       isNormalUser = true;
       group = "users";
