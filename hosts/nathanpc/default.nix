@@ -20,17 +20,17 @@ inputs:
       #greeters.slick.enable = true;
     };
   };
-  #services.displayManager.sddm = {
-  #enable = true;
-  #wayland.enable = true;
-  #settings = {
-  #Users = {
-  #MinimumUid = 1000;
-  #MaximumUid = 65535;
-  #HideUsers = lib.concatStringsSep "," (lib.subtractLists ["nathan" "grace"] (builtins.attrNames config.users.users));
-  #};
-  #};
-  #};
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+    settings = {
+      Users = {
+        MinimumUid = 1000;
+        MaximumUid = 65535;
+        HideUsers = lib.concatStringsSep "," (lib.subtractLists ["nathan" "grace" "momzilla"] (builtins.attrNames config.users.users));
+      };
+    };
+  };
   services.desktopManager.plasma6.enable = true;
   programs.hyprland.enable = true;
   programs.steam.enable = true;

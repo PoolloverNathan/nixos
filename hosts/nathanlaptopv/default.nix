@@ -80,6 +80,18 @@ inputs:
         local all all trust
       '';
     };
+    displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+      settings = {
+        Users = {
+          MinimumUid = 1000;
+          MaximumUid = 65535;
+          HideUsers = lib.concatStringsSep "," (lib.subtractLists ["nathan" "grace"] (builtins.attrNames config.users.users));
+        };
+      };
+    };
+    desktopManager.plasma6.enable = true;
     flatpak.enable = true;
     fprintd.enable = true;
     minecraft-server = {

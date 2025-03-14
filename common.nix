@@ -102,6 +102,10 @@
       isNormalUser = true;
       createHome = true;
       group = "users";
+      packages = [
+        pkgs.firefox
+        pkgs.kitty
+      ];
     };
     grace = {
       uid = 1500;
@@ -109,6 +113,9 @@
       createHome = true;
       group = "users";
       hashedPassword = "$y$j9T$K8M1g/BDdjUkkdjwGjwN80$RURlskVc3WEbqqMmow2cRKr492qnnRPxBXv64QOuo17";
+      packages = [
+        pkgs.firefox
+      ];
     };
   };
   programs = {
