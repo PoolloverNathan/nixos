@@ -31,6 +31,7 @@ inputs:
       };
     };
   };
+  services.flatpak.enable = true;
   services.desktopManager.plasma6.enable = true;
   programs.hyprland.enable = true;
   programs.steam.enable = true;
