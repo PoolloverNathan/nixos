@@ -37,6 +37,12 @@ inputs:
   programs.steam.enable = true;
   fileSystems."/".fsType = "tmpfs";
   disko.devices = import ./disks.nix;
+  services.kubo = {
+    enable = true;
+    autoMount = true;
+    autoMigrate = true;
+    enableGC = true;
+  };
   system.stateVersion = "25.05";
 
   # Stateful
