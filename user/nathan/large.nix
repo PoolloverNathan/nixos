@@ -243,7 +243,7 @@ args@{
       rows = lib.map row;
     in {
       "$terminal" = "${pkgs.kitty}/bin/kitty";
-      "$fileManager" = "${pkgs.dolphin}/bin/kitty";
+      "$fileManager" = "${pkgs.kdePackages.dolphin}/bin/dolphin";
       exec = [
         
       ];

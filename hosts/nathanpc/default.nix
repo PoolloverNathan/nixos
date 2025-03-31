@@ -5,6 +5,8 @@ inputs:
     inputs.disko.nixosModules.disko
   ];
   networking.hostName = "nathanpc";
+  networking.firewall.allowedTCPPorts = [23112 23113 23115];
+  networking.firewall.allowedUDPPorts = [24454 34454 54454];
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
