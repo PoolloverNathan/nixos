@@ -230,6 +230,12 @@ inputs:
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILqKSVKd79mV0yXHI7ZhdG8OsM/6NocyeNGiH7WTLlMi marley@maakuarch"
       ];
     };
+    zen = {
+      uid = 1079;
+      isNormalUser = true;
+      group = "users";
+      hashedPassword = "$y$j9T$Br08YeOQm97FzgKohA5dL.$3fqhRV0emN29hflWNMZlrNr9f571bt7441rtrPDn1s3";
+    };
     null = {
       uid = 1984;
       isNormalUser = true;
