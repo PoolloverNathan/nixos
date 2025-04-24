@@ -52,12 +52,6 @@ inputs:
       rejectPackets = true;
     };
     # TODO(PoolloverNathan): add adlists
-    hosts = {
-      "70.16.249.212" = ["chromebook.ccpsnet.net" "h.pool.net.eu.org"];
-      #"0.0.0.0" = ["api.hapara.com" "hl.hapara.com"];
-      "192.168.1.4" = ["home.vscode.local"];
-      "192.168.143.69" = ["roaming.vscode.local"];
-    };
   };
 
   # Configure network proxy if necessary
@@ -117,15 +111,6 @@ inputs:
     '';
     jellyfin.enable = true;
     jellyfin.openFirewall = true;
-    dnsmasq.enable = true;
-    dnsmasq.settings = {
-      # domain-needed = true;
-      server = [
-        "8.8.8.8"
-        "8.8.4.4"
-      ];
-      # local = "home";
-    };
     hypridle.enable = true;
   };
   security.rtkit.enable = true;

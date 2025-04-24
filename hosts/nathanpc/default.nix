@@ -2,6 +2,8 @@ inputs:
 { config, lib, pkgs, ... }: {
   imports = [
     ./hardware.nix
+    ../../dns.nix
+    ../../upnp.nix
     inputs.disko.nixosModules.disko
   ];
   networking.hostName = "nathanpc";
@@ -46,6 +48,12 @@ inputs:
     enableGC = true;
   };
   system.stateVersion = "25.05";
+    services.postgresql = {
+      enable = true;
+      authentication = pkgs.lib.mkOverride 10 ''
+        local all all trust
+      '';
+    };
 
   # Stateful
   fileSystems."/root" = {

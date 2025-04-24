@@ -41,7 +41,7 @@ in {
   };
   catppuccin = {
     enable = true;
-    flavor = "frappe";
+    flavor = "macchiato";
     accent = "sky";
   };
   home.stateVersion = "24.11";
