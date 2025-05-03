@@ -12,6 +12,7 @@ inputs:
       ./hardware.nix
       # (builtins.fetchurl https://nathanlaptopv.axolotl-snake.ts.net/tailscale.nix)
       ../../nginx.nix
+      ../../upnp.nix
       ../../sso.nix
       ../../ci.nix
     ];

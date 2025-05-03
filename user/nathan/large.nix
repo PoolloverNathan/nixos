@@ -34,10 +34,17 @@ args@{
     pkgs.xsel
     pkgs.jetbrains.idea-community
   ];
+  services = {
+    lorri.enable = true;
+  };
   programs = {
     thefuck = {
       enable = true;
-      enableBashIntegration = true;
+      enableFishIntegration = true;
+    };
+    direnv = {
+      enable = true;
+      silent = true;
     };
     vencord = {
       enable = true;

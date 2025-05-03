@@ -9,7 +9,7 @@
     description = "Nginx port mapping";
     ports = [80 443];
     ignore = true;
-    bindsTo = "nginx.service";
+    services = ["nginx.service"];
   };
   services.nginx = {
     enable = true;

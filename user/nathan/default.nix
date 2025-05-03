@@ -59,7 +59,7 @@ in {
     stgit;
     vscode-server = pkgs.runCommand "vscode-server" {} ''
       mkdir -p $out/bin
-      echo 'NIX_LD_LIBRARY_PATH=${lib.escapeShellArg (lib.makeLibraryPath [pkgs.stdenv.cc.cc.lib])} NIX_LD="$(cat ${lib.escapeShellArg "${pkgs.stdenv.cc}/nix-support/dynamic-linker"})" ${pkgs.vscode}/bin/code serve-web --without-connection-token --host 127.0.0.1 --port 2352' > $out/bin/$name
+      echo 'NIX_LD_LIBRARY_PATH=${lib.escapeShellArg (lib.makeLibraryPath [pkgs.stdenv.cc.cc.lib])} NIX_LD="$(cat ${lib.escapeShellArg "${pkgs.stdenv.cc}/nix-support/dynamic-linker"})" ${pkgs.vscode}/bin/code serve-web --without-connection-token --host 0.0.0.0 --port 2352' > $out/bin/$name
       chmod +x $out/bin/$name
     '';
     nixos =
