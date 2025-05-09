@@ -178,6 +178,7 @@ in {
         gitsigns.enable = true;
         lightline.enable = true;
         lsp.enable = true;
+        fzf-lua.enable = true;
         treesitter = {
           enable = true;
           settings = {
