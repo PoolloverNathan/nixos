@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   imports = [
     ./binary-cache.nix
     ./webdav.nix
@@ -42,6 +42,29 @@
       #    proxyWebsockets = true;
       #  };
       #};
+      "chromebook.ccpsnet.net" = {
+        locations."/".root = pkgs.linkFarm "chromebook.ccpsnet.net" (let
+          pac = /*js*/ ''
+            function FindProxyForURL(url, host) {
+              // TODO: look into proxying in some cases
+              if (isPlainHostName(host) ||
+                shExpMatch(host, "*.local") ||
+                shExpMatch(host, "*.na") ||
+                dnsDomainIs(host, "chromebook.ccpsnet.net") ||
+                isInNet(dnsResolve(host), "10.0.0.0", "255.0.0.0") ||
+                isInNet(dnsResolve(host), "172.16.0.0",  "255.240.0.0") ||
+                isInNet(dnsResolve(host), "192.168.0.0",  "255.255.0.0") ||
+                isInNet(dnsResolve(host), "127.0.0.0", "255.255.255.0"))
+                return "DIRECT";
+              return "SOCKS5 proxy.na:1080; DIRECT";
+            }
+          '';
+        in {
+          "homeaccessnew.pac" = builtins.toFile "homeaccessnew.pac" pac;
+          "hsaccessnew.pac" = builtins.toFile "hsaccessnew.pac" pac;
+          "homeaccesshs.pac" = builtins.toFile "hsaccessnew.pac" pac;
+        });
+      };
       "n.pool.net.eu.org" = {
         addSSL = true;
         enableACME = true;

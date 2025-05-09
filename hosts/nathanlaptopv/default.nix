@@ -53,6 +53,11 @@ inputs:
       rejectPackets = true;
     };
     # TODO(PoolloverNathan): add adlists
+    hosts = {
+      "70.16.249.212" = ["chromebook.ccpsnet.net" "h.pool.net.eu.org"];
+      #"0.0.0.0" = ["api.hapara.com" "hl.hapara.com"];
+      "192.168.77.198" = ["proxy.na"];
+    };
   };
 
   # Configure network proxy if necessary
