@@ -10,6 +10,7 @@ inputs:
   imports =
     [ # Include the results of the hardware scan.
       ./hardware.nix
+      (inputs.self.mkNathan { large = false; canSudo = true; })
       # (builtins.fetchurl https://nathanlaptopv.axolotl-snake.ts.net/tailscale.nix)
       ../../nginx.nix
       ../../upnp.nix
@@ -91,7 +92,7 @@ inputs:
         };
       };
     };
-    desktopManager.plasma6.enable = true;
+    #desktopManager.plasma6.enable = true;
     flatpak.enable = true;
     fprintd.enable = true;
     minecraft-server = {

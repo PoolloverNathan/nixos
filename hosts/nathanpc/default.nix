@@ -5,6 +5,7 @@ inputs:
     ../../dns.nix
     ../../upnp.nix
     inputs.disko.nixosModules.disko
+    (inputs.self.mkNathan { large = true; canSudo = true; })
   ];
   networking.hostName = "nathanpc";
   networking.firewall.allowedTCPPorts = [23112 23113 23115];
