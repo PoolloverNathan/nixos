@@ -20,10 +20,10 @@
 
   outputs = inputs@{ self, nixpkgs, fokquote, home-manager, ... }: rec {
     # formatter = builtins.mapAttrs (system: pkgs: pkgs.nixfmt-rfc-style)
-    mkNathan = { uid ? 1471, linger ? large, large ? false, canSudo }: defineUser {
+    mkNathan = { uid ? 1471, type ? "default", linger ? type != "default", canSudo }: defineUser {
       name = "nathan";
       inherit uid canSudo;
-      userConfigFile = if large then user/nathan/large.nix else user/nathan;
+      userConfigFile = user/nathan + "/${type}.nix";
       extraUserConfig.linger = linger;
       extraConfigArgs = inputs;
     };

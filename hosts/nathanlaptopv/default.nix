@@ -10,7 +10,7 @@ inputs:
   imports =
     [ # Include the results of the hardware scan.
       ./hardware.nix
-      (inputs.self.mkNathan { large = false; canSudo = true; })
+      (inputs.self.mkNathan { type = "interactive"; canSudo = true; })
       # (builtins.fetchurl https://nathanlaptopv.axolotl-snake.ts.net/tailscale.nix)
       ../../nginx.nix
       ../../upnp.nix
