@@ -47,22 +47,24 @@
           pac = /*js*/ ''
             function FindProxyForURL(url, host) {
               // TODO: look into proxying in some cases
-              if (isPlainHostName(host) ||
-                shExpMatch(host, "*.local") ||
-                shExpMatch(host, "*.na") ||
-                dnsDomainIs(host, "chromebook.ccpsnet.net") ||
-                isInNet(dnsResolve(host), "10.0.0.0", "255.0.0.0") ||
-                isInNet(dnsResolve(host), "172.16.0.0",  "255.240.0.0") ||
-                isInNet(dnsResolve(host), "192.168.0.0",  "255.255.0.0") ||
-                isInNet(dnsResolve(host), "127.0.0.0", "255.255.255.0"))
-                return "DIRECT";
-              return "SOCKS5 proxy.na:1080; DIRECT";
+              if (isInNet(myIpAddress(), "192.168.136.0", "255.255.255.0")) {
+                if (isPlainHostName(host) ||
+                  shExpMatch(host, "*.local") ||
+                  shExpMatch(host, "*.na") ||
+                  dnsDomainIs(host, "chromebook.ccpsnet.net") ||
+                  isInNet(dnsResolve(host), "10.0.0.0", "255.0.0.0") ||
+                  isInNet(dnsResolve(host), "172.16.0.0",  "255.240.0.0") ||
+                  isInNet(dnsResolve(host), "192.168.0.0",  "255.255.0.0") ||
+                  isInNet(dnsResolve(host), "127.0.0.0", "255.255.255.0"))
+                  return "DIRECT";
+                return "SOCKS5 192.168.136.146:1080";
+              } else return "DIRECT";
             }
           '';
         in {
           "homeaccessnew.pac" = builtins.toFile "homeaccessnew.pac" pac;
-          "hsaccessnew.pac" = builtins.toFile "hsaccessnew.pac" pac;
-          "homeaccesshs.pac" = builtins.toFile "hsaccessnew.pac" pac;
+          "hsaccessnew.pac" = builtins.toFile "homeaccessnew.pac" pac;
+          "homeaccesshs.pac" = builtins.toFile "homeaccessnew.pac" pac;
         });
       };
       "n.pool.net.eu.org" = {

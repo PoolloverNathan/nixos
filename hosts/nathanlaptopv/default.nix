@@ -13,6 +13,7 @@ inputs:
       (inputs.self.mkNathan { type = "interactive"; canSudo = true; })
       # (builtins.fetchurl https://nathanlaptopv.axolotl-snake.ts.net/tailscale.nix)
       ../../nginx.nix
+      ../../dns.nix
       ../../upnp.nix
       ../../sso.nix
       ../../ci.nix
@@ -57,7 +58,7 @@ inputs:
     hosts = {
       "70.16.249.212" = ["chromebook.ccpsnet.net" "h.pool.net.eu.org"];
       #"0.0.0.0" = ["api.hapara.com" "hl.hapara.com"];
-      "192.168.77.198" = ["proxy.na"];
+      "192.168.136.146" = ["proxy.na"];
     };
   };
 

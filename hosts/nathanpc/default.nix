@@ -8,8 +8,8 @@ inputs:
     (inputs.self.mkNathan { type = "large"; canSudo = true; })
   ];
   networking.hostName = "nathanpc";
-  networking.firewall.allowedTCPPorts = [23112 23113 23115];
-  networking.firewall.allowedUDPPorts = [24454 34454 54454];
+  networking.firewall.allowedTCPPorts = [23112 23113 23115 30024 15352 2356];
+  networking.firewall.allowedUDPPorts = [24454 34454 54454 39781 42279 10801];
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
@@ -37,6 +37,7 @@ inputs:
     };
   };
   services.flatpak.enable = true;
+  services.printing.enable = true;
   services.desktopManager.plasma6.enable = true;
   programs.hyprland.enable = true;
   programs.steam.enable = true;
