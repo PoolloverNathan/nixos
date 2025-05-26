@@ -47,7 +47,7 @@
           pac = /*js*/ ''
             function FindProxyForURL(url, host) {
               // TODO: look into proxying in some cases
-              if (isInNet(myIpAddress(), "192.168.136.0", "255.255.255.0")) {
+              if (isInNet(myIpAddress(), "192.168.243.0", "255.255.255.0")) {
                 if (isPlainHostName(host) ||
                   shExpMatch(host, "*.local") ||
                   shExpMatch(host, "*.na") ||
@@ -57,7 +57,7 @@
                   isInNet(dnsResolve(host), "192.168.0.0",  "255.255.0.0") ||
                   isInNet(dnsResolve(host), "127.0.0.0", "255.255.255.0"))
                   return "DIRECT";
-                return "SOCKS5 192.168.136.146:1080";
+                return "SOCKS5 192.168.243.60:1080";
               } else return "DIRECT";
             }
           '';

@@ -10,6 +10,7 @@ inputs:
   networking.hostName = "nathanpc";
   networking.firewall.allowedTCPPorts = [23112 23113 23115 30024 15352 2356];
   networking.firewall.allowedUDPPorts = [24454 34454 54454 39781 42279 10801];
+  networking.firewall.enable = false;
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
