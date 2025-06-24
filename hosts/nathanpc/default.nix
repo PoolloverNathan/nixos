@@ -2,6 +2,7 @@ inputs:
 { config, lib, pkgs, ... }: {
   imports = [
     ./hardware.nix
+    ../../nginx.nix
     ../../dns.nix
     ../../upnp.nix
     inputs.disko.nixosModules.disko

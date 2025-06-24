@@ -47,6 +47,7 @@
           pac = /*js*/ ''
             function FindProxyForURL(url, host) {
               // TODO: look into proxying in some cases
+<<<<<<< HEAD
               if (isInNet(myIpAddress(), "192.168.243.0", "255.255.255.0")) {
                 if (isPlainHostName(host) ||
                   shExpMatch(host, "*.local") ||
@@ -59,6 +60,20 @@
                   return "DIRECT";
                 return "SOCKS5 192.168.243.60:1080";
               } else return "DIRECT";
+||||||| parent of 11f5acce (Reapply "remove proxy")
+              if (isPlainHostName(host) ||
+                shExpMatch(host, "*.local") ||
+                shExpMatch(host, "*.na") ||
+                dnsDomainIs(host, "chromebook.ccpsnet.net") ||
+                isInNet(dnsResolve(host), "10.0.0.0", "255.0.0.0") ||
+                isInNet(dnsResolve(host), "172.16.0.0",  "255.240.0.0") ||
+                isInNet(dnsResolve(host), "192.168.0.0",  "255.255.0.0") ||
+                isInNet(dnsResolve(host), "127.0.0.0", "255.255.255.0"))
+                return "DIRECT";
+              return "SOCKS5 proxy.na:1080; DIRECT";
+=======
+              return "DIRECT";
+>>>>>>> 11f5acce (Reapply "remove proxy")
             }
           '';
         in {

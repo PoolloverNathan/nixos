@@ -12,7 +12,6 @@ inputs:
       ./hardware.nix
       (inputs.self.mkNathan { type = "interactive"; canSudo = true; })
       # (builtins.fetchurl https://nathanlaptopv.axolotl-snake.ts.net/tailscale.nix)
-      ../../nginx.nix
       ../../dns.nix
       ../../upnp.nix
       ../../sso.nix

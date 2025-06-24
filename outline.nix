@@ -19,13 +19,13 @@ in {
     publicUrl = "https://${host}";
     storage = {
       storageType = "local";
-      localRootDir = "/nix/persist/outline/data";
+      localRootDir = "/var/lib/outline/data";
     };
     oidcAuthentication = {
       authUrl = https://discord.com/api/oauth2/authorize;
       clientId = "1320907864298229780";
-      clientSecretFile = "/nix/persist/outline/secret";
-      displayName = "discord";
+      clientSecretFile = "/var/lib/outline/secret";
+      displayName = "Discord";
       scopes = ["email" "identify" "openid"];
       tokenUrl = https://discord.com/api/oauth2/token;
       userinfoUrl = https://discord.com/api/users/@me;
