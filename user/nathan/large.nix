@@ -15,7 +15,7 @@
   lib,
   pkgs,
   ...
-}@args: {
+}@args: a: {
   imports = [
     (import ./interactive.nix args)
   ];
@@ -26,6 +26,28 @@
     pkgs.jetbrains.idea-community
   ];
   programs = {
+    nixvim = {
+      withNodeJs = true;
+      withRuby = true;
+      plugins = {
+        gitsigns.enable = true;
+        lightline.enable = true;
+        lsp.enable = true;
+        lsp.servers = lib.mapAttrs (k: v: { enable = true; }) (__trace (a.options.programs.nixvim.type.getSubOptions []) 1).plugins.lsp.servers;
+        fzf-lua.enable = true;
+        treesitter = {
+          enable = true;
+          settings = {
+            highlight.enable = true;
+            indent.enable = true;
+            incremental_selection.enable = true;
+          };
+        };
+        treesitter-textobjects.enable = true;
+        undotree.enable = true;
+        wakatime.enable = true;
+      };
+    };
     vscode = let
       nix-vscode-extensions = builtins.getFlake github:nix-community/nix-vscode-extensions/0a162b8f1f19d55ee282927b9f6aefe3fff7116a;
       vscode = pkgs.vscodium;

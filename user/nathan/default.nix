@@ -141,16 +141,15 @@ in {
     nixvim = {
       # TODO(PoolloverNathan):
       # • get vim-surround working again
-      # • add figblk and lit parsers to treesitter
       enable = true;
-      withNodeJs = true;
-      withRuby = true;
       opts = {
         aw = true;
-        et = false;
+        et = true;
         ex = true;
         fdm = "marker";
-        sw = 4;
+        list = true;
+        sts = 0;
+        sw = 0;
         ts = 4;
         udf = true;
       };
@@ -173,23 +172,6 @@ in {
             gitsigns = true;
           };
         };
-      };
-      plugins = {
-        gitsigns.enable = true;
-        lightline.enable = true;
-        lsp.enable = true;
-        fzf-lua.enable = true;
-        treesitter = {
-          enable = true;
-          settings = {
-            highlight.enable = true;
-            indent.enable = true;
-            incremental_selection.enable = true;
-          };
-        };
-        treesitter-textobjects.enable = true;
-        undotree.enable = true;
-        wakatime.enable = true;
       };
       performance.byteCompileLua = {
         enable = true;

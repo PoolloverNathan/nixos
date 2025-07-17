@@ -30,7 +30,6 @@
           content = {
             type = "filesystem";
             format = "btrfs";
-            mountpoint = "/var";
             mountOptions = ["noatime"];
           };
         };

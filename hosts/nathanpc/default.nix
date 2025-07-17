@@ -60,6 +60,10 @@ inputs:
     };
 
   # Stateful
+  fileSystems."/var" = {
+    device = "/nix/varfs";
+    options = ["loop"];
+  };
   fileSystems."/root" = {
     device = "/var/usr/root";
     options = ["bind"];
