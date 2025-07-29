@@ -29,6 +29,7 @@ in
         ublock-origin
         # wakatime
       ];
+      extensions.settings = pkgs.lib.mkForce {};
     };
   };
 }

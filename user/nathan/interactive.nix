@@ -21,10 +21,6 @@
     lorri.enable = true;
   };
   programs = {
-    thefuck = {
-      enable = true;
-      enableFishIntegration = true;
-    };
     direnv = {
       enable = true;
       silent = true;

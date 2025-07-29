@@ -10,7 +10,7 @@
     fokquote.url = github:fokohetman/fok-quote;
     home-manager.url = github:nix-community/home-manager;
     # nethack.url = git+ssh://nathanlaptopv/home/nathan/stuff/nethack;
-    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
+    nixpkgs.url = github:nixos/nixpkgs/release-25.05;
     nixvim.url = github:nix-community/nixvim;
     nur.url = github:nix-community/nur;
     nur.inputs.nixpkgs.follows = "nixpkgs";
