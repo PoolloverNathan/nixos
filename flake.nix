@@ -62,7 +62,20 @@
         ];
         specialArgs.inputs = inputs;
       };
+      bunny-signing-node = signingNode "nathan-signing-node";
     };
+    signingNode = name:
+      nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        modules = [
+          (import ./signing-node.nix)
+          {
+            networking.hostName = name;
+            system.stateVersion = "25.05";
+            virtualisation.vmVariant.virtualisation = {};
+          }
+        ];
+      };
     defineUser = {
       uid,
       name,
