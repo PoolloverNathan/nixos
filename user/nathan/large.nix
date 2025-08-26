@@ -33,7 +33,7 @@
         gitsigns.enable = true;
         lightline.enable = true;
         lsp.enable = true;
-        lsp.servers = lib.mapAttrs (k: v: { enable = true; }) (__trace (a.options.programs.nixvim.type.getSubOptions []) 1).plugins.lsp.servers;
+        #lsp.servers = lib.mapAttrs (k: v: { enable = true; }) (__trace (a.options.programs.nixvim.type.getSubOptions []) 1).plugins.lsp.servers;
         fzf-lua.enable = true;
         treesitter = {
           enable = true;
