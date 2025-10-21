@@ -45,7 +45,6 @@
           content = {
             type = "filesystem";
             format = "btrfs";
-            mountpoint = "/home";
             mountOptions = ["noatime"];
           };
         };

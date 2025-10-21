@@ -64,6 +64,10 @@ inputs:
     device = "/nix/varfs";
     options = ["loop"];
   };
+  fileSystems."/home" = {
+    device = "/nix/homefs";
+    options = ["loop"];
+  };
   fileSystems."/root" = {
     device = "/var/usr/root";
     options = ["bind"];
