@@ -1,10 +1,14 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   imports = [
     ./binary-cache.nix
     ./webdav.nix
     ./outline.nix
     ./upnp.nix
   ];
+  systemd.services.nginx.serviceConfig = {
+    ProtectHome = lib.mkForce "read-only";
+    ProtectSystem = lib.mkForce true;
+  };
   networking.upnp.nginx = {
     description = "Nginx port mapping";
     ports = [80 443];
@@ -47,7 +51,12 @@
           pac = /*js*/ ''
             function FindProxyForURL(url, host) {
               // TODO: look into proxying in some cases
-              return "DIRECT";
+				//return "DIRECT"
+                if (host.startsWith("192.168")) {
+
+				return "DIRECT"
+                }
+              return "SOCKS5 192.168.24.169:8000";
             }
           '';
         in {
@@ -60,6 +69,11 @@
         addSSL = true;
         enableACME = true;
         locations."/".proxyPass = http://127.0.0.1:21047;
+      };
+      "slidev.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = "http://localhost:3030";
       };
       "n.pool.net.eu.org" = {
         addSSL = true;
@@ -74,6 +88,10 @@
           proxy_read_timeout 1h;
           client_max_body_size 8G;
         '';
+      };
+      "pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
       };
       "ckout.pool.net.eu.org" = {
         addSSL = true;
@@ -132,6 +150,11 @@
           proxyPass = http://100.124.64.122:7368;
           proxyWebsockets = true;
         };
+      };
+      "maven.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = http://127.0.0.1:55422;
       };
       "eizel.pool.net.eu.org" = {
         addSSL = true;

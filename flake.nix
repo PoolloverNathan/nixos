@@ -63,6 +63,28 @@
         specialArgs.inputs = inputs;
       };
       bunny-signing-node = signingNode "nathan-signing-node";
+      strawberry = nixpkgs.lib.nixosSystem rec {
+        system = "aarch64-linux";
+        modules = [
+          ./common.nix
+          {
+            networking.hostName = "strawberry";
+            system.stateVersion = "25.05";
+          }
+        ];
+        specialArgs.inputs = inputs;
+      };
+      blueberry = nixpkgs.lib.nixosSystem rec {
+        system = "aarch64-linux";
+        modules = [
+          ./common.nix
+          {
+            networking.hostName = "blueberry";
+            system.stateVersion = "25.05";
+          }
+        ];
+        specialArgs.inputs = inputs;
+      };
     };
     signingNode = name:
       nixpkgs.lib.nixosSystem rec {

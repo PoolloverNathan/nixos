@@ -51,6 +51,7 @@ inputs:
     autoMigrate = true;
     enableGC = true;
   };
+  services.pcscd.enable = true;
   system.stateVersion = "25.05";
     services.postgresql = {
       enable = true;
