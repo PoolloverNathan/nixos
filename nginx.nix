@@ -56,6 +56,11 @@
           "homeaccesshs.pac" = builtins.toFile "homeaccessnew.pac" pac;
         });
       };
+      "hexic.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = http://127.0.0.1:21047;
+      };
       "n.pool.net.eu.org" = {
         addSSL = true;
         enableACME = true;
