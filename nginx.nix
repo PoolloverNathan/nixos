@@ -38,6 +38,18 @@
           proxyWebsockets = true;
         };
       };
+      "chromebook.ccpsnet.net" = {
+        locations."/" = {
+          proxyPass = "http://localhost:26626";
+        };
+      };
+      "whp.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:26626";
+        };
+      };
       #"outline.pool.net.eu.org" = {
       #  addSSL = true;
       #  enableACME = true;
@@ -46,25 +58,6 @@
       #    proxyWebsockets = true;
       #  };
       #};
-      "chromebook.ccpsnet.net" = {
-        locations."/".root = pkgs.linkFarm "chromebook.ccpsnet.net" (let
-          pac = /*js*/ ''
-            function FindProxyForURL(url, host) {
-              // TODO: look into proxying in some cases
-				//return "DIRECT"
-                if (host.startsWith("192.168")) {
-
-				return "DIRECT"
-                }
-              return "SOCKS5 192.168.24.169:8000";
-            }
-          '';
-        in {
-          "homeaccessnew.pac" = builtins.toFile "homeaccessnew.pac" pac;
-          "hsaccessnew.pac" = builtins.toFile "homeaccessnew.pac" pac;
-          "homeaccesshs.pac" = builtins.toFile "homeaccessnew.pac" pac;
-        });
-      };
       "hexic.pool.net.eu.org" = {
         addSSL = true;
         enableACME = true;
