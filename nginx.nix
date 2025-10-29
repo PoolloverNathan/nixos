@@ -43,6 +43,13 @@
           proxyPass = "http://localhost:26626";
         };
       };
+      "lounge.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:9000";
+        };
+      };
       "whp.pool.net.eu.org" = {
         addSSL = true;
         enableACME = true;
