@@ -22,10 +22,16 @@
 
   # boot.kernelPackages = pkgs.linuxPackages_6_11;
   # boot.crashDump.enable = true;
+
+  boot.kernelParams = [
+    "softlockup_panic=1"
+    "nmi_watchdog=panic"
+  ];
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
     "kernel.sysrq" = 1;
+    "kernel.panic" = 5;
   };
   boot.loader = {
     efi.canTouchEfiVariables = true;
