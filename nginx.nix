@@ -43,13 +43,6 @@
           proxyPass = "http://localhost:26626";
         };
       };
-      "lounge.pool.net.eu.org" = {
-        addSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://localhost:9000";
-        };
-      };
       "whp.pool.net.eu.org" = {
         addSSL = true;
         enableACME = true;
@@ -89,9 +82,32 @@
           client_max_body_size 8G;
         '';
       };
+      "vnc.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = http://127.0.0.1:2356/;
+          proxyWebsockets = true;
+          basicAuthFile = ./code.htpasswd;
+        };
+      };
       "pool.net.eu.org" = {
         addSSL = true;
         enableACME = true;
+        locations."/lounge/".proxyPass = http://127.0.0.1:9000/;
+        locations."/vnc/" = {
+          proxyPass = http://127.0.0.1:2356/;
+          proxyWebsockets = true;
+          basicAuthFile = ./code.htpasswd;
+        };
+      };
+      "files.pool.net.eu.org" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = http://127.0.0.1:3923/;
+        extraConfig = ''
+          client_max_body_size 8G;
+        '';
       };
       "ckout.pool.net.eu.org" = {
         addSSL = true;
