@@ -38,11 +38,12 @@ inputs:
       };
     };
   };
+  programs.hyprland.enable = true;
+  programs.niri.enable = true;
+  programs.steam.enable = true;
+  services.desktopManager.plasma6.enable = true;
   services.flatpak.enable = true;
   services.printing.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  programs.hyprland.enable = true;
-  programs.steam.enable = true;
   fileSystems."/".fsType = "tmpfs";
   disko.devices = import ./disks.nix;
   services.kubo = {
